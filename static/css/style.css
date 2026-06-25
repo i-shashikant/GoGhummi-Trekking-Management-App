@@ -1,0 +1,11 @@
+*{margin:0px;}
+
+#main #canvas {
+    border: 2px black;
+}
+
+#canvas{
+    width: 60%;
+    height: 780px;
+    margin: auto;
+}
