@@ -15,9 +15,9 @@ def create_tables():
                CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL UNIQUE,
-                email TEXT NOT NULL,
+                email TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                role TEXT NOT NULL
+                role TEXT NOT NULL DEFAULT 'user'
             )
                """)
     
@@ -32,23 +32,24 @@ def create_tables():
                 end_date TEXT NOT NULL,
                 max_slots INTEGER NOT NULL,
                 available_slots INTEGER NOT NULL,
+                duration INTEGER NOT NULL,
                 description TEXT,
                 status TEXT NOT NULL,
-                assigned_staffs TEXT
+                assigned_staff_id INTEGER
             )
                """)
 
     conn.commit()
     conn.close()
 
-def add_user(username, email, password):
+def add_user(username, email, password, role):
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
-               INSERT INTO users (username, email, password)
-               VALUES (?, ?, ?)
-           """, (username, email, password))
+               INSERT INTO users (username, email, password, role)
+               VALUES (?, ?, ?, ?)
+           """, (username, email, password, role))
 
     conn.commit()
     conn.close()

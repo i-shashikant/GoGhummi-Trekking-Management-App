@@ -35,6 +35,17 @@ def register():
         return "User registered successfully!"
     return render_template("register.html")
 
+@app.route("/admin")
+def admin_dashboard():
+    return render_template("admin_dashboard.html")
+
+@app.route("/create_trek", methods=["GET", "POST"])
+def create_trek():
+    # if request.method == "POST":
+    #     # Handle form submission for creating a new trek
+    #     pass
+    return render_template("create_treks.html")
+
 create_tables()
 if __name__ == "__main__":
     app.run(debug=True) 
