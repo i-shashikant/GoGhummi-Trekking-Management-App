@@ -1,40 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login Form</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
-<body>
-    <div id="main">
-        <div id="canvas">
-            <div id="form-body-login">
-                <h2 class="text-center">Login Form</h2>
-                <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Remember me</label>
-                </div>
-                <div id="login-button" class="text-center">
-                    <button type="submit" class="btn btn-primary" value="Login" >Login</button> <br>
-                    Are you a new user? <a href="register.html">Register here</a>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</body>
-</html> -->
-
-
 {% extends "base.html" %}
 
 {% block title %}
@@ -47,16 +10,16 @@ Login
         <div id="canvas">
             <div id="form-body-login">
                 <h2 class="text-center">Login Form</h2>
-                <form>
+                <form method="POST" action="{{ url_for('login') }}">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" name="username">
                     <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
+                    <input type="password" class="form-control" name="password">
+                </div> 
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Remember me</label>
