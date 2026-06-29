@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container mt-5">
+    <h1 class="text-center mb-3">
+    Trekking Management System
+    </h1>
+
+    <h4 class="text-center">
+    Welcome Again! 👋
+    </h4>
+
+    <p class="text-center text-muted mb-5">
+    See what's new and manage your treks, bookings, and profile.
+    </p>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4>Assigned Trek</h4>
+                    <p>View and manage your assigned trekking event</p>
+                    <a href="#" class="btn btn-success"> View </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4>Update Treks</h4>
+                    <p>Update trek status and available slots</p>
+                    <a href="#" class="btn btn-primary"> Update </a>
+                </div>
+            </div>
+        </div>  
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4>Registered Users</h4>
+                    <p>View trekkers registered for your treks.</p>
+                    <a href="#" class="btn btn-primary"> Open </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4>Logout</h4>
+                    <p>Exit the dashboard</p>
+                    <a href="#" class="btn btn-danger"> Logout </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

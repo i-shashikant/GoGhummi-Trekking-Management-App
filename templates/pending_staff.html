@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Pending Staff
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<h2 class="text-center mb-4">
+Pending Staff Approval
+</h2>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Username</th>
+<th>Email</th>
+<th>Approve</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for member in staff %}
+
+<tr>
+
+<td>{{ member[0] }}</td>
+<td>{{ member[1] }}</td>
+<td>{{ member[2] }}</td>
+
+<td>
+
+<a href="{{ url_for('approve_staff_route', staff_id=member[0]) }}"
+class="btn btn-success btn-sm">
+
+Approve
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

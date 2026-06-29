@@ -23,6 +23,13 @@ Register
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" name="password">
                 </div>
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-select" name="role" required>
+                        <option value="user">User</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                </div>
                 <div id="login-button" class="text-center">
                     <button type="submit" class="btn btn-primary" value="Register">Register</button> <br>
                     Are you an existing user? <a href="{{ url_for('login') }}">Login here</a>
