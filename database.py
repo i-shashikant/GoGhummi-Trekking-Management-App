@@ -27,7 +27,7 @@ def create_tables():
             )
                """)
     
-    #Tables for treks
+    #Tables for treks 
     cursor.execute("""
                CREATE TABLE IF NOT EXISTS treks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,6 +38,7 @@ def create_tables():
                 end_date TEXT NOT NULL,
                 duration INTEGER NOT NULL,
                 max_slots INTEGER NOT NULL,
+                available_slots INTEGER NOT NULL,
                 description TEXT,
                 status TEXT NOT NULL,
                 assigned_staff_id INTEGER
@@ -46,6 +47,19 @@ def create_tables():
 
     conn.commit()
     conn.close()
+# Treks table indexes:
+# 0 = id
+# 1 = trek_name
+# 2 = location
+# 3 = difficulty
+# 4 = start_date
+# 5 = end_date
+# 6 = duration
+# 7 = max_slots
+# 8 = available_slots
+# 9 = description
+# 10 = status
+# 11 = assigned_staff_id
 
 def add_user(username, email, password, role, approval_status):
     conn = get_connection()
@@ -178,12 +192,22 @@ def get_approved_staff():
 
 def get_treks_by_staff(staff_id):
     conn = get_connection()
-    cursor = conn.cursor
+    cursor = conn.cursor()
 
-    cursor.execute(""""
+    cursor.execute("""
                    SELECT * from treks WHERE assigned_staff_id = ? 
                    """, (staff_id,))
     treks = cursor.fetchall()
     conn.close
     return treks
 
+def update_trek_by_staff(trek_id, avaialble_slots, status):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+                    UPDATE treks SET available_slots = ?, status = ? WHERE id = ?
+                   """,(avaialble_slots, status, trek_id))
+    
+    conn.commit()
+    conn.close()

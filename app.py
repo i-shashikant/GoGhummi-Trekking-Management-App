@@ -30,7 +30,7 @@ def login():
                     if user[5] == "Pending":
                         return "Your account is waiting for admin approval."
 
-                    return "Staff Dashboard Coming Soon"
+                    return redirect(url_for("staff_dashboard"))
 
             else:
                 return "Invalid Password"
@@ -127,10 +127,12 @@ def approve_staff_route(staff_id):
     approve_staff(staff_id)
     return redirect(url_for("pending_staff"))
 
+@app.route('/staff')
+def staff_dashboard():
 
-
-
-
+    staff_id = session["user_id"]
+    treks = get_treks_by_staff(staff_id)
+    return render_template("staff_dashboard.html", treks=treks)
 
 
 

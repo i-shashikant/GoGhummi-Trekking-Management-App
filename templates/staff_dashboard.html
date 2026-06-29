@@ -57,5 +57,34 @@ Staff Dashboard
             </div>
         </div>
     </div>
+    <h3 class="mt-5">My Assigned Treks</h3>
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Trek</th>
+                <th>Location</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for trek in treks %}
+
+            <tr>
+
+                <td>{{ trek[1] }}</td>
+                <td>{{ trek[2] }}</td>
+                <td>{{ trek[10] }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
 
 {% endblock %}

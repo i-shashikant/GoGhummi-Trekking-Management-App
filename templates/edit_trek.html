@@ -38,20 +38,20 @@ Create Trek
             <input type="number" class="form-control" id="max_slots" name="max_slots" min="1" value="{{ trek[7] }}" required>
             
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required>{{ trek[8] }}</textarea>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ trek[9] }}</textarea>
 
 
             <label for="status" class="form-label">Status</label>
             <select class="form-select" id="status" name="status" required>
-                <option value="Open" {% if trek[9] == "Open" %}selected{% endif %}>Open</option>
-                <option value="Closed" {% if trek[9] == "Closed" %}selected{% endif %}>Closed</option>
-                <option value="Completed" {% if trek[9] == "Completed" %}selected{% endif %}>Completed</option>
+                <option value="Open" {% if trek[10] == "Open" %}selected{% endif %}>Open</option>
+                <option value="Closed" {% if trek[10] == "Closed" %}selected{% endif %}>Closed</option>
+                <option value="Completed" {% if trek[10] == "Completed" %}selected{% endif %}>Completed</option>
             </select>
 
             <label for="assigned_staff" class="form-label">Assigned Staff</label>
             <select name="assigned_staff_id" id="assigned_staff">
                 {% for staff in approved_staff %}
-                    <option value="{{ staff[0] }}" {% if staff[0] == trek[10] %}selected{% endif %}>{{ staff[1] }}</option>
+                    <option value="{{ staff[0] }}" {% if staff[0] == trek[11] %}selected{% endif %}>{{ staff[1] }}</option>
                 {% endfor %}
             </select>
 
