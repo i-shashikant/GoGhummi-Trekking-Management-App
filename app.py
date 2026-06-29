@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek, get_pending_staff, approve_staff, get_approved_staff, get_treks_by_staff, update_trek_by_staff
-
+from database import get_open_treks, book_trek, decrease_available_slots, has_booked_trek
 app = Flask(__name__)
 app.secret_key = "trekking_secret_key"
 
@@ -23,7 +23,7 @@ def login():
                     return render_template("admin_dashboard.html")
 
                 elif user[4] == "user":
-                    return "User Dashboard Coming Soon"
+                    return redirect(url_for("user_dashboard"))
 
                 elif user[4] == "staff":
 
@@ -156,7 +156,31 @@ def update_trek_staff(trek_id):
         "update_trek_staff.html", trek=trek
     )
 
+@app.route("/user")
+def user_dashboard():
+    treks = get_open_treks()
+    return render_template("user_dashboard.html", treks=treks)
 
+
+@app.route("/book_trek/<int:trek_id>", methods=["GET"])
+def book_trek_route(trek_id):
+    user_id = session["user_id"]
+
+# Already booked?
+    if has_booked_trek(user_id, trek_id):
+        return "You have already booked this trek."
+
+    trek = get_trek_by_id(trek_id)
+
+    # No slots left?
+    if trek[8] <= 0:
+        return "Sorry! No slots available."
+
+    book_trek(user_id, trek_id)
+
+    decrease_available_slots(trek_id)
+
+    return redirect(url_for("user_dashboard"))
 
 create_tables()
 if __name__ == "__main__":

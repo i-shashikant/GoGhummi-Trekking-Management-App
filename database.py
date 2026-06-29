@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import datetime
 
 
 def get_connection():
@@ -44,6 +45,19 @@ def create_tables():
                 assigned_staff_id INTEGER
             )
                """)
+
+    #Table for Bookings
+    cursor.execute("""
+               CREATE TABLE IF NOT EXISTS bookings (
+                   id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   user_id INTEGER NOT NULL,
+                   trek_id INTEGER NOT NULL,
+                   booking_date TEXT NOT NULL,
+                   status TEXT NOT NULL,
+                   FOREIGN KEY (user_id) REFERENCES users (id),
+                   FOREIGN KEY (trek_id) REFERENCES treks (id)
+               )
+           """)
 
     conn.commit()
     conn.close()
@@ -225,11 +239,52 @@ def update_trek_by_staff(trek_id, available_slots, status):
     conn.commit()
     conn.close()
 
+def get_open_treks():
+    conn = get_connection()
+    cursor = conn.cursor()
 
+    cursor.execute("""
+                   SELECT * FROM treks WHERE status = 'Open'
+               """)
+    open_treks = cursor.fetchall()
 
+    conn.close()
+    return open_treks
 
+def book_trek(user_id, trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
 
+    booking_date = datetime.now().strftime("%Y-%m-%d")
+    cursor.execute("""
+               INSERT INTO bookings (user_id, trek_id, booking_date, status)
+               VALUES (?, ?, ?, ?)
+           """, (user_id, trek_id, booking_date, 'Booked'))
 
+    conn.commit()
+    conn.close()
 
+def decrease_available_slots(trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
 
+    cursor.execute("""
+               UPDATE treks
+               SET available_slots = available_slots - 1
+               WHERE id = ?
+           """, (trek_id,))
 
+    conn.commit()
+    conn.close()
+
+def has_booked_trek(user_id, trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               SELECT * FROM bookings WHERE user_id = ? AND trek_id = ?
+           """, (user_id, trek_id))
+    booking = cursor.fetchone()
+
+    conn.close()
+    return booking
