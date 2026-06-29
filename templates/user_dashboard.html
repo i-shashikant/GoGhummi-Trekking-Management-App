@@ -6,6 +6,7 @@ View Treks
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center mb-4">View Treks</h1>
+    <a href="{{ url_for('my_bookings') }}" class="btn btn-primary mb-3"> My Bookings</a>
     <table class="table">
         <thead>
             <tr>
@@ -37,6 +38,7 @@ View Treks
                 <td>{{ trek[10] }}</td>
                 <td> <a href="{{ url_for('book_trek_route', trek_id=trek[0]) }}" class="btn btn-success btn-sm"> Book </a> </td>
             </tr>
+            
             {% endfor %}
         </tbody>
     </table>

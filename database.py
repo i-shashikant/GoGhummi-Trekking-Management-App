@@ -288,3 +288,18 @@ def has_booked_trek(user_id, trek_id):
 
     conn.close()
     return booking
+
+def get_user_bookings(user_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               SELECT bookings.id, treks.trek_name, treks.location, bookings.booking_date, bookings.status
+               FROM bookings
+               JOIN treks ON bookings.trek_id = treks.id
+               WHERE bookings.user_id = ?
+           """, (user_id,))
+    bookings = cursor.fetchall()
+
+    conn.close()
+    return bookings
