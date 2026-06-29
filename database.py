@@ -16,8 +16,7 @@ def create_tables():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL UNIQUE,
                 email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                role TEXT NOT NULL
+                password TEXT NOT NULL
             )
                """)
     
@@ -30,9 +29,8 @@ def create_tables():
                 difficulty TEXT NOT NULL,
                 start_date TEXT NOT NULL,
                 end_date TEXT NOT NULL,
-                max_slots INTEGER NOT NULL,
-                available_slots INTEGER NOT NULL,
                 duration INTEGER NOT NULL,
+                max_slots INTEGER NOT NULL,
                 description TEXT,
                 status TEXT NOT NULL,
                 assigned_staff_id INTEGER
@@ -75,10 +73,10 @@ def add_trek(trek_name, location, difficulty, start_date, end_date,
 
     cursor.execute("""
                INSERT INTO treks (trek_name, location, difficulty, start_date, end_date,
-                                  duration, max_slots, available_slots, description, status, assigned_staff_id)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                  duration, max_slots, description, status, assigned_staff_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            """, (trek_name, location, difficulty, start_date, end_date,
-                 duration, max_slots, available_slots, description, status, assigned_staff_id))
+                 duration, max_slots, description, status, assigned_staff_id))
 
     conn.commit()
     conn.close()
@@ -94,3 +92,26 @@ def get_all_treks():
 
     conn.close()
     return treks
+
+def delete_trek(trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               DELETE FROM treks WHERE id = ?
+           """, (trek_id,))
+
+    conn.commit()
+    conn.close()
+
+def get_trek_by_id(trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               SELECT * FROM treks WHERE id = ?
+           """, (trek_id,))
+    trek = cursor.fetchone()
+
+    conn.close()
+    return trek

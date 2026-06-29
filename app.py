@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks
+from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek
 
 app = Flask(__name__)
 
@@ -63,6 +63,13 @@ def create_trek():
 def view_treks():
     treks = get_all_treks()
     return render_template("view_treks.html", treks=treks)
+
+@app.route("/delete_trek/<int:trek_id>")
+def delete_trek_route(trek_id):
+
+    delete_trek(trek_id)
+
+    return redirect(url_for("view_treks"))
 
 create_tables()
 if __name__ == "__main__":
