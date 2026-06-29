@@ -115,3 +115,19 @@ def get_trek_by_id(trek_id):
 
     conn.close()
     return trek
+
+def update_trek(trek_id, trek_name, location, difficulty, start_date, end_date,
+                duration, max_slots, description, status, assigned_staff_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               UPDATE treks
+               SET trek_name = ?, location = ?, difficulty = ?, start_date = ?, end_date = ?,
+                   duration = ?, max_slots = ?, description = ?, status = ?, assigned_staff_id = ?
+               WHERE id = ?
+           """, (trek_name, location, difficulty, start_date, end_date,
+                 duration, max_slots, description, status, assigned_staff_id, trek_id))
+
+    conn.commit()
+    conn.close()

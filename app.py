@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek
+from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek
 
 app = Flask(__name__)
 
@@ -70,6 +70,25 @@ def delete_trek_route(trek_id):
     delete_trek(trek_id)
 
     return redirect(url_for("view_treks"))
+
+@app.route("/edit_trek/<int:trek_id>", methods=["GET", "POST"])
+def edit_trek(trek_id):
+    trek = get_trek_by_id(trek_id)
+    if request.method == "POST":
+        trek_name = request.form.get("trek_name")
+        location = request.form.get("location")
+        difficulty = request.form.get("difficulty")
+        start_date = request.form.get("start_date")
+        end_date = request.form.get("end_date")
+        duration = request.form.get("duration")
+        max_slots = request.form.get("max_slots")
+        description = request.form.get("description")
+        status = request.form.get("status")
+        assigned_staff_id = request.form.get("assigned_staff_id")
+
+        update_trek(trek_id, trek_name, location, difficulty, start_date, end_date, duration, max_slots, description, status, assigned_staff_id)
+        return redirect(url_for("view_treks"))
+    return render_template("edit_trek.html", trek=trek)
 
 create_tables()
 if __name__ == "__main__":
