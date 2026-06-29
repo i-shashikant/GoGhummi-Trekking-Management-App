@@ -95,10 +95,10 @@ def add_trek(trek_name, location, difficulty, start_date, end_date,
 
     cursor.execute("""
                INSERT INTO treks (trek_name, location, difficulty, start_date, end_date,
-                                  duration, max_slots, description, status, assigned_staff_id)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                  duration, max_slots, available_slots, description, status, assigned_staff_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            """, (trek_name, location, difficulty, start_date, end_date,
-                 duration, max_slots, description, status, assigned_staff_id))
+                 duration, max_slots, available_slots, description, status, assigned_staff_id))
 
     conn.commit()
     conn.close()
@@ -211,3 +211,25 @@ def update_trek_by_staff(trek_id, avaialble_slots, status):
     
     conn.commit()
     conn.close()
+
+def update_trek_by_staff(trek_id, available_slots, status):
+    conn = get_connection()
+    cursor = conn.cursor()  
+
+    cursor.execute("""
+                    UPDATE treks
+                    SET available_slots = ?, status = ?
+                    WHERE id = ?
+                   """, (available_slots, status, trek_id))
+
+    conn.commit()
+    conn.close()
+
+
+
+
+
+
+
+
+

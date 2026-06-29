@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek, get_pending_staff, approve_staff, get_approved_staff, get_treks_by_staff
+from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek, get_pending_staff, approve_staff, get_approved_staff, get_treks_by_staff, update_trek_by_staff
 
 app = Flask(__name__)
 app.secret_key = "trekking_secret_key"
@@ -80,9 +80,9 @@ def create_trek():
 
         add_trek(trek_name, location, difficulty, start_date, end_date, duration, max_slots, description, status, assigned_staff_id)
         return redirect(url_for("admin_dashboard"))
-    #     # Handle form submission for creating a new trek
-    #     pass
-    return render_template("create_trek.html")
+
+    approved_staff = get_approved_staff()
+    return render_template("create_trek.html", approved_staff=approved_staff)
 
 @app.route("/view_treks")
 def view_treks():
@@ -134,7 +134,27 @@ def staff_dashboard():
     treks = get_treks_by_staff(staff_id)
     return render_template("staff_dashboard.html", treks=treks)
 
+@app.route("/staff/update/<int:trek_id>", methods=["GET", "POST"])
+def update_trek_staff(trek_id):
 
+    trek = get_trek_by_id(trek_id)
+
+    if request.method == "POST":
+
+        available_slots = request.form.get("available_slots")
+        status = request.form.get("status")
+
+        update_trek_by_staff(
+            trek_id,
+            available_slots,
+            status
+        )
+
+        return redirect(url_for("staff_dashboard"))
+
+    return render_template(
+        "update_trek_staff.html", trek=trek
+    )
 
 
 

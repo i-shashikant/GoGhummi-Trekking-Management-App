@@ -47,7 +47,17 @@ Create Trek
             </select>
 
             <label for="assigned_staff" class="form-label">Assigned Staff</label>
-            <input class="form-control" id="assigned_staff" name="assigned_staff_id">
+
+            <select class="form-select" name="assigned_staff_id" id="assigned_staff">
+
+            <option value="">-- Select Staff --</option>
+
+                {% for staff in approved_staff %}
+                    <option value="{{ staff[0] }}">
+                        {{ staff[1] }}
+                    </option>
+                {% endfor %}
+            </select>
 
         </div>
 
