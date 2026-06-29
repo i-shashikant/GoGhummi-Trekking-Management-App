@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}
+View Treks
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">View Treks</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Duration</th>
+                <th>Max Slots</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Assigned Staff</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+       </thead>
+        <tbody>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek[0] }}</td>
+                <td>{{ trek[1] }}</td>
+                <td>{{ trek[2] }}</td>
+                <td>{{ trek[3] }}</td>
+                <td>{{ trek[4] }}</td>
+                <td>{{ trek[5] }}</td>
+                <td>{{ trek[6] }}</td>
+                <td>{{ trek[7] }}</td>
+                <td>{{ trek[8] }}</td>
+                <td>{{ trek[9] }}</td>
+                <td>{{ trek[10] }}</td>
+                <td> <a href="#" class="btn btn-warning btn-sm"> Edit </a> </td>
+                <td> <a href="#" class="btn btn-danger btn-sm"> Delete </a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

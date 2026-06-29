@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-from database import create_tables, add_user, get_user_by_username
+from flask import Flask, render_template, request, redirect, url_for
+from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks
 
 app = Flask(__name__)
 
@@ -41,10 +41,28 @@ def admin_dashboard():
 
 @app.route("/create_trek", methods=["GET", "POST"])
 def create_trek():
-    # if request.method == "POST":
+    if request.method == "POST":
+        trek_name = request.form.get("trek_name")
+        location = request.form.get("location")
+        difficulty = request.form.get("difficulty")
+        start_date = request.form.get("start_date")
+        end_date = request.form.get("end_date")
+        duration = request.form.get("duration")
+        max_slots = request.form.get("max_slots")
+        description = request.form.get("description")
+        status = request.form.get("status")
+        assigned_staff_id = request.form.get("assigned_staff_id")
+
+        add_trek(trek_name, location, difficulty, start_date, end_date, duration, max_slots, description, status, assigned_staff_id)
+        return redirect(url_for("admin_dashboard"))
     #     # Handle form submission for creating a new trek
     #     pass
-    return render_template("create_treks.html")
+    return render_template("create_trek.html")
+
+@app.route("/view_treks")
+def view_treks():
+    treks = get_all_treks()
+    return render_template("view_treks.html", treks=treks)
 
 create_tables()
 if __name__ == "__main__":

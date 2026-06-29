@@ -17,7 +17,7 @@ def create_tables():
                 username TEXT NOT NULL UNIQUE,
                 email TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                role TEXT NOT NULL DEFAULT 'user'
+                role TEXT NOT NULL
             )
                """)
     
@@ -42,14 +42,14 @@ def create_tables():
     conn.commit()
     conn.close()
 
-def add_user(username, email, password, role):
+def add_user(username, email, password):
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
-               INSERT INTO users (username, email, password, role)
-               VALUES (?, ?, ?, ?)
-           """, (username, email, password, role))
+               INSERT INTO users (username, email, password)
+               VALUES (?, ?, ?)
+           """, (username, email, password))
 
     conn.commit()
     conn.close()
@@ -66,3 +66,31 @@ def get_user_by_username(username):
     conn.close()
     return user
 
+def add_trek(trek_name, location, difficulty, start_date, end_date,
+             duration, max_slots, description, status, assigned_staff_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    available_slots = max_slots
+
+    cursor.execute("""
+               INSERT INTO treks (trek_name, location, difficulty, start_date, end_date,
+                                  duration, max_slots, available_slots, description, status, assigned_staff_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           """, (trek_name, location, difficulty, start_date, end_date,
+                 duration, max_slots, available_slots, description, status, assigned_staff_id))
+
+    conn.commit()
+    conn.close()
+
+def get_all_treks():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               SELECT * FROM treks
+           """)
+    treks = cursor.fetchall()
+
+    conn.close()
+    return treks
