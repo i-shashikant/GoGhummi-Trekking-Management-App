@@ -1,7 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek, get_pending_staff, approve_staff, get_approved_staff, get_treks_by_staff, update_trek_by_staff
 from database import get_open_treks, book_trek, decrease_available_slots, has_booked_trek, get_user_bookings, get_users_by_trek
+
+from config import Config, db
+
 app = Flask(__name__)
+app.config.from_object(Config)
+db.init_app(app)
+
 app.secret_key = "trekking_secret_key"
 
 @app.route("/login", methods=["GET", "POST"])
