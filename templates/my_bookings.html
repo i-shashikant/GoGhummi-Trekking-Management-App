@@ -34,17 +34,21 @@ My Bookings
 
         {% for booking in bookings %}
 
-            <tr>
+        <tr>
 
-                <td>{{ booking[1] }}</td>
+        <td>{{ booking.id }}</td>
 
-                <td>{{ booking[2] }}</td>
+        <td>{{ booking.trek.trek_name }}</td>
 
-                <td>{{ booking[3] }}</td>
+        <td>{{ booking.trek.location }}</td>
 
-                <td>{{ booking[4] }}</td>
+        <td>{{ booking.trek.start_date }}</td>
 
-            </tr>
+        <td>{{ booking.trek.status }}</td>
+
+        <td>{{ booking.status }}</td>
+
+        </tr>
 
         {% endfor %}
 

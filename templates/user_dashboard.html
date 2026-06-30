@@ -6,7 +6,7 @@ View Treks
 {% block content %}
 <div class="container mt-5">
     <h1 class="text-center mb-4">View Treks</h1>
-    <a href="{{ url_for('my_bookings') }}" class="btn btn-primary mb-3"> My Bookings</a>
+    <a href="{{ url_for('user.my_bookings') }}" class="btn btn-primary mb-3"> My Bookings</a>
     <table class="table">
         <thead>
             <tr>
@@ -26,17 +26,17 @@ View Treks
         <tbody>
             {% for trek in treks %}
             <tr>
-                <td>{{ trek[0] }}</td>
-                <td>{{ trek[1] }}</td>
-                <td>{{ trek[2] }}</td>
-                <td>{{ trek[3] }}</td>
-                <td>{{ trek[4] }}</td>
-                <td>{{ trek[5] }}</td>
-                <td>{{ trek[6] }}</td>
-                <td>{{ trek[8] }}</td>
-                <td>{{ trek[9] }}</td>
-                <td>{{ trek[10] }}</td>
-                <td> <a href="{{ url_for('book_trek_route', trek_id=trek[0]) }}" class="btn btn-success btn-sm"> Book </a> </td>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.trek_name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.start_date }}</td>
+                <td>{{ trek.end_date }}</td>
+                <td>{{ trek.duration }}</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.description }}</td>
+                <td>{{ trek.status }}</td>
+                <td> <a href="{{ url_for('user.book_trek_route', trek_id=trek.id) }}" class="btn btn-success btn-sm"> Book </a> </td>
             </tr>
             
             {% endfor %}
