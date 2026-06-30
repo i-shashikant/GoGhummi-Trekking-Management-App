@@ -7,3 +7,5 @@ class Booking(db.Model):
     trek_id = db.Column(db.Integer, db.ForeignKey("treks.id"), nullable=False)
     booking_date = db.Column(db.Date, nullable=False)
     status = db.Column(db.String(50), nullable=False)
+    user = db.relationship("User", backref="bookings", lazy=True)
+    trek = db.relationship("Trek", backref="bookings", lazy=True)

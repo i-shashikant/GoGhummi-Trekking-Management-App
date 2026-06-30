@@ -14,3 +14,4 @@ class Trek(db.Model):
     description = db.Column(db.Text, nullable=True)
     status = db.Column(db.String(50), nullable=False)
     assigned_staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    assigned_staff = db.relationship("User", backref="assigned_treks", lazy=True)
