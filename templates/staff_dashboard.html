@@ -67,6 +67,7 @@ Staff Dashboard
                 <th>Location</th>
                 <th>Status</th>
                 <th>Actions</th>
+                <th>Participants</th>
             </tr>
         </thead>
 
@@ -80,6 +81,7 @@ Staff Dashboard
                 <td>{{ trek[2] }}</td>
                 <td>{{ trek[10] }}</td>
                 <td> <a href="{{ url_for('update_trek_staff', trek_id=trek[0]) }}" class="btn btn-warning btn-sm"> Update </a> </td>
+                <td><a href="{{ url_for('staff_participants', trek_id=trek[0]) }}" class="btn btn-info btn-sm"> View Participants </a></td>
 
             </tr>
 

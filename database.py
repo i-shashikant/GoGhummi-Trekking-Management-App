@@ -303,3 +303,18 @@ def get_user_bookings(user_id):
 
     conn.close()
     return bookings
+
+def get_users_by_trek(trek_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+               SELECT users.id, users.username, users.email
+               FROM bookings
+               JOIN users ON bookings.user_id = users.id
+               WHERE bookings.trek_id = ?
+           """, (trek_id,))
+    user = cursor.fetchall()
+
+    conn.close()
+    return user

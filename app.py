@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import create_tables, add_user, get_user_by_username, add_trek, get_all_treks, delete_trek, get_trek_by_id, update_trek, get_pending_staff, approve_staff, get_approved_staff, get_treks_by_staff, update_trek_by_staff
-from database import get_open_treks, book_trek, decrease_available_slots, has_booked_trek, get_user_bookings
+from database import get_open_treks, book_trek, decrease_available_slots, has_booked_trek, get_user_bookings, get_users_by_trek
 app = Flask(__name__)
 app.secret_key = "trekking_secret_key"
 
@@ -187,6 +187,11 @@ def my_bookings():
     user_id = session["user_id"]
     bookings = get_user_bookings(user_id)
     return render_template("my_bookings.html", bookings=bookings)
+
+@app.route("/staff/participants/<int:trek_id>")
+def staff_participants(trek_id):
+    participants = get_users_by_trek(trek_id)
+    return render_template("staff_participants.html", participants=participants)
 
 create_tables()
 if __name__ == "__main__":
