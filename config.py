@@ -4,5 +4,5 @@ db = SQLAlchemy()
 
 class Config:
     SECRET_KEY = "trek_secret_key"
-    SQLALCHEMI_DATABASE_URI = "sqlite:///trek.db"
-    SQLALCHEMY_TRACK_MODIFICAITONS = False
+    SQLALCHEMY_DATABASE_URI = "sqlite:///trek.db"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
