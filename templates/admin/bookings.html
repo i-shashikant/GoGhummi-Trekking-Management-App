@@ -16,9 +16,17 @@
             <td>{{ b.user.username }}</td>
             <td>{{ b.trek.trek_name }}</td>
             <td>
-                <span class="badge {% if b.status == 'Booked' %}bg-success{% elif b.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">
-                    {{ b.status }}
-                </span>
+            {% if b.status == "Booked" %}
+                    <span class="badge bg-success">Booked</span>
+
+            {% elif b.status == "Cancelled" %}
+                    <span class="badge bg-danger">Cancelled</span>
+
+            {% else %}
+                    <span class="badge bg-secondary">
+                        {{ b.status }}
+                    </span>
+            {% endif %}
             </td>
             <td>{{ b.booking_date.strftime('%d %b %Y, %I:%M %p') }}</td>
         </tr>

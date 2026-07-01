@@ -180,21 +180,29 @@ def delete_trek(trek_id):
 @admin_bp.route("/staff")
 def staff():
 
-    staff = User.query.filter_by(
-        role="staff",
-        approval_status="Pending"
-    ).all()
+    q = request.args.get("q", "").strip()
 
-    return render_template( "admin/staff.html", staff=staff)
+    query = User.query.filter_by(role="staff")
+
+    if q:
+        query = query.filter(User.username.ilike(f"%{q}%"))
+
+    staff_list = query.order_by(User.username).all()
+
+    return render_template(
+        "admin/staff.html",
+        staff_list=staff_list,
+        q=q
+    )
 
 
-@admin_bp.route("/staff/approve/<int:staff_id>", methods=["POST"])
-def approve_staff(staff_id):
+@admin_bp.route("/staff/approve/<int:user_id>", methods=["POST"])
+def approve_staff(user_id):
 
-    staff = db.session.get(User, staff_id)
+    staff = db.session.get(User, user_id)
 
     if staff is None:
-        return "Staff not found"
+        return "Staff not found", 404
 
     staff.approval_status = "Approved"
 
@@ -202,20 +210,19 @@ def approve_staff(staff_id):
 
     return redirect(url_for("admin.staff"))
 
-@admin_bp.route("/users")
-def users():
-    return render_template(
-        "admin/users.html",
-        users=[]
-    )
+@admin_bp.route("/staff/blacklist/<int:user_id>", methods=["POST"])
+def blacklist_staff(user_id):
 
+    staff = db.session.get(User, user_id)
 
-@admin_bp.route("/bookings")
-def bookings():
-    return render_template(
-        "admin/bookings.html",
-        bookings=[]
-    )
+    if staff is None:
+        return "Staff not found", 404
+
+    staff.approval_status = "Blacklisted"
+
+    db.session.commit()
+
+    return redirect(url_for("admin.staff"))
 
 
 @admin_bp.route("/treks/assign/<int:trek_id>", methods=["POST"])
@@ -236,3 +243,65 @@ def assign_staff(trek_id):
     db.session.commit()
 
     return redirect(url_for("admin.treks"))
+
+
+@admin_bp.route("/users")
+def users():
+
+    q = request.args.get("q", "").strip()
+
+    query = User.query.filter_by(role="user")
+
+    if q:
+        query = query.filter(User.username.ilike(f"%{q}%"))
+
+    users = query.order_by(User.username).all()
+
+    return render_template(
+        "admin/users.html",
+        users=users,
+        q=q
+    )
+
+@admin_bp.route("/users/blacklist/<int:user_id>", methods=["POST"])
+def blacklist_user(user_id):
+
+    user = db.session.get(User, user_id)
+
+    if user is None:
+        return "User not found", 404
+
+    user.approval_status = "Blacklisted"
+
+    db.session.commit()
+
+    return redirect(url_for("admin.users"))
+
+@admin_bp.route("/users/activate/<int:user_id>", methods=["POST"])
+def activate_user(user_id):
+
+    user = db.session.get(User, user_id)
+
+    if user is None:
+        return "User not found", 404
+
+    user.approval_status = "Approved"
+
+    db.session.commit()
+
+    return redirect(url_for("admin.users"))
+
+
+@admin_bp.route("/bookings")
+def bookings():
+
+    bookings = (
+        Booking.query
+        .order_by(Booking.booking_date.desc())
+        .all()
+    )
+
+    return render_template(
+        "admin/bookings.html",
+        bookings=bookings
+    )

@@ -21,16 +21,15 @@
             <td>{{ u.username }}</td>
             <td>{{ u.username }}</td>
             <td>{{ u.email or '-' }}</td>
-            <td>{{ u.phone or '-' }}</td>
             <td>
-                {% if u.is_active %}
+                {% if u.approval_status %}
                     <span class="badge bg-success">Active</span>
                 {% else %}
                     <span class="badge bg-dark">Blacklisted</span>
                 {% endif %}
             </td>
             <td>
-                {% if u.is_active %}
+                {% if u.approval_status %}
                 <form method="POST" action="{{ url_for('admin.blacklist_user', user_id=u.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this user?');">
                     <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-ban"></i> Blacklist</button>
                 </form>
