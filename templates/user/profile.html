@@ -1,0 +1,36 @@
+{% extends "base.html" %}}
+{% import "user/_nav.html" as nav %}
+{% block title %}My Profile | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.user_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-id-card"></i> My Profile</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-trek p-4">
+            <form method="POST">
+                <!-- <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="full_name" class="form-control" value="{{ user.full_name }}" required>
+                </div> -->
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" value="{{ user.username }}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ user.email or '' }}">
+                </div>
+                <!-- <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone" class="form-control" value="{{ user.phone or '' }}">
+                </div> -->
+                <div class="mb-3">
+                    <label class="form-label">New Password <small class="text-muted">(leave blank to keep current)</small></label>
+                    <input type="password" name="new_password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-trek w-100">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

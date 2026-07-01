@@ -1,0 +1,44 @@
+{% extends "base.html" %}}
+{% import "user/_nav.html" as nav %}
+{% block title %}Browse Treks | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.user_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-magnifying-glass"></i> Browse Treks</h2>
+
+<form method="GET" class="row g-2 mb-4">
+    <div class="col-md-4">
+        <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ q }}">
+    </div>
+    <div class="col-md-3">
+        <select name="difficulty" class="form-select">
+            <option value="">All Difficulties</option>
+            {% for d in ['Easy','Moderate','Hard'] %}
+            <option value="{{ d }}" {% if difficulty == d %}selected{% endif %}>{{ d }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="location" class="form-control" placeholder="Location" value="{{ location }}">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-trek w-100" type="submit">Filter</button>
+    </div>
+</form>
+
+<div class="row g-4">
+    {% for t in treks %}
+    <div class="col-md-4">
+        <div class="card card-trek p-3 h-100">
+            <h5>{{ t.trek_name }}</h5>
+            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ t.location }}</p>
+            <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
+            <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ t.start_date.strftime('%d %b') }} - {{ t.end_date.strftime('%d %b %Y') }}</p>
+            <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
+            <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-trek btn-sm mt-auto">View Details</a>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No treks match your search.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "user/_nav.html" as nav %}
+{% block title %}My Bookings | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.user_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-clipboard-list"></i> My Bookings</h2>
+
+<div class="table-responsive">
+<table class="table table-hover align-middle bg-white">
+    <thead>
+        <tr><th>Booking ID</th><th>Trek</th><th>Location</th><th>Status</th><th>Booked On</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+    {% for b in bookings %}
+        <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.trek.trek_name }}</td>
+            <td>{{ b.trek.location }}</td>
+            <td>
+                <span class="badge {% if b.status == 'Booked' %}bg-success{% elif b.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {{ b.status }}
+                </span>
+            </td>
+            <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
+            <td>
+                {% if b.status == 'Booked' %}
+                <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
+                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="text-center text-muted">No bookings yet. <a href="{{ url_for('user.browse_treks') }}">Browse treks</a></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

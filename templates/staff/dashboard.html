@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "staff/_nav.html" as nav %}
+{% block title %}Staff Dashboard | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.staff_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Welcome, {{ user.username }}</h2>
+
+{% if trek_stats|length == 0 %}
+    <div class="alert alert-info">You have not been assigned any treks yet. Please check back later.</div>
+{% else %}
+<div class="row g-4">
+    {% for item in trek_stats %}
+    <div class="col-md-6">
+        <div class="card card-trek p-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <h5>{{ item.trek.trek_name }}</h5>
+                <span class="badge badge-status-{{ item.trek.status }}">{{ item.trek.status }}</span>
+            </div>
+            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ item.trek.location }}</p>
+            <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ item.trek.start_date.strftime('%d %b') }} - {{ item.trek.end_date.strftime('%d %b %Y') }}</p>
+            <p class="mb-1"><i class="fa-solid fa-chair"></i> Slots: {{ item.trek.available_slots }} / {{ item.trek.max_slots }}</p>
+            <p class="mb-2"><i class="fa-solid fa-users"></i> Registered Trekkers: {{ item.booked_count }}</p>
+            <a href="{{ url_for('staff.assigned_treks', trek_id=item.trek.id) }}" class="btn btn-trek btn-sm">Manage Trek</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

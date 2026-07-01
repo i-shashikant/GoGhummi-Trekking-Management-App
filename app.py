@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config, db
 from routes import all_blueprints
 from models import User, Trek, Booking
+from routes.user import user_bp
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)

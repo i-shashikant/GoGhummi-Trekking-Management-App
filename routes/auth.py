@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User
 from config import db
 
@@ -6,7 +7,7 @@ from config import db
 
 auth_bp = Blueprint("auth", __name__)
 
-@auth_bp.route("/login", methods=["GET", "POST"])
+
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
 
@@ -17,24 +18,24 @@ def login():
 
         user = User.query.filter_by(username=username).first()
 
-        if user and user.password == password:
+        if user and check_password_hash(user.password, password):
 
             session["user_id"] = user.id
             session["username"] = user.username
             session["role"] = user.role
 
             if user.role == "admin":
-                return redirect(url_for("admin.admin_dashboard"))
+                return redirect(url_for("admin.dashboard"))
 
             elif user.role == "staff":
 
                 if user.approval_status == "Pending":
                     return "Waiting for admin approval."
 
-                return redirect(url_for("staff.staff_dashboard"))
+                return redirect(url_for("staff.dashboard"))
 
             else:
-                return redirect(url_for("user.user_dashboard"))
+                return redirect(url_for("user.dashboard"))
 
         return "Invalid username or password"
 
@@ -45,7 +46,7 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
-        password = request.form.get("password")
+        password=generate_password_hash(request.form["password"])
         role = request.form.get("role")
 
         existing_user = User.query.filter_by(username=username).first()

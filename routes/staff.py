@@ -1,55 +1,69 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from config import db
 from models.trek import Trek
+from models.user import User
 from models.booking import Booking
 
 staff_bp = Blueprint("staff", __name__)
 
-@staff_bp.route("/staff")
-def staff_dashboard():
+@staff_bp.route("/")
+def dashboard():
 
-    staff_id = session["user_id"]
+    user = db.session.get(User, session["user_id"])
 
-    treks = Trek.query.filter_by(
-        assigned_staff_id=staff_id
+    assigned_treks = Trek.query.filter_by(
+        assigned_staff_id=user.id
+    ).order_by(
+        Trek.start_date
     ).all()
 
     return render_template(
-        "staff_dashboard.html",
+        "staff/dashboard.html",
+        user=user,
+        assigned_treks=assigned_treks
+    )
+
+
+@staff_bp.route("/treks")
+def assigned_treks():
+
+    user = db.session.get(User, session["user_id"])
+
+    treks = Trek.query.filter_by(
+        assigned_staff_id=user.id
+    ).order_by(
+        Trek.start_date
+    ).all()
+
+    return render_template(
+        "staff/assigned_treks.html",
         treks=treks
     )
 
-@staff_bp.route("/staff/update/<int:trek_id>", methods=["GET", "POST"])
-def update_trek_staff(trek_id):
+@staff_bp.route("/participants/<int:trek_id>")
+def participants(trek_id):
 
     trek = db.session.get(Trek, trek_id)
 
     if trek is None:
-        return "Trek not found"
-    
-    if request.method == "POST":
-
-        trek.available_slots = int(request.form.get("available_slots"))
-
-        trek.status = request.form.get("status")
-
-        db.session.commit()
-
-        return redirect(url_for("staff.staff_dashboard"))
-    
-    return render_template(
-    "update_trek_staff.html",
-    trek=trek
-    )
-
-@staff_bp.route("/staff/participants/<int:trek_id>")
-def staff_participants(trek_id):
-
-    bookings = Booking.query.filter_by(
-        trek_id=trek_id
-    ).all()
+        return "Trek not found", 404
 
     return render_template(
-        "staff_participants.html",
-        bookings=bookings
+        "staff/participants.html",
+        trek=trek,
+        bookings=trek.bookings
     )
+
+@staff_bp.route("/update/<int:trek_id>", methods=["POST"])
+def update_trek(trek_id):
+
+    trek = db.session.get(Trek, trek_id)
+
+    if trek is None:
+        return "Trek not found", 404
+
+    trek.status = request.form["status"]
+
+    db.session.commit()
+
+    return redirect(url_for("staff.dashboard"))
