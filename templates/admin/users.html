@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "admin/_nav.html" as nav %}
+{% block title %}Manage Users | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-users"></i> Manage Users</h2>
+
+<form method="GET" class="mb-3 d-flex">
+    <input type="text" name="q" class="form-control me-2" placeholder="Search users by name..." value="{{ q }}">
+    <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i></button>
+</form>
+
+<div class="table-responsive">
+<table class="table table-hover align-middle bg-white">
+    <thead>
+        <tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    {% for u in users %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email or '-' }}</td>
+            <td>{{ u.phone or '-' }}</td>
+            <td>
+                {% if u.is_active %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-dark">Blacklisted</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if u.is_active %}
+                <form method="POST" action="{{ url_for('admin.blacklist_user', user_id=u.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this user?');">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-ban"></i> Blacklist</button>
+                </form>
+                {% else %}
+                <form method="POST" action="{{ url_for('admin.activate_user', user_id=u.id) }}" class="d-inline">
+                    <button class="btn btn-sm btn-success"><i class="fa-solid fa-check"></i> Re-activate</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="text-center text-muted">No users found.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

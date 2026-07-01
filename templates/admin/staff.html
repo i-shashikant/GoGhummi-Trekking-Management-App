@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% import "admin/_nav.html" as nav %}
+{% block title %}Manage Staff | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Manage Trek Staff</h2>
+
+<form method="GET" class="mb-3 d-flex">
+    <input type="text" name="q" class="form-control me-2" placeholder="Search staff by name..." value="{{ q }}">
+    <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i></button>
+</form>
+
+<div class="table-responsive">
+<table class="table table-hover align-middle bg-white">
+    <thead>
+        <tr><th>Name</th><th>Username</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    {% for s in staff_list %}
+        <tr>
+            <td>{{ s.username }}</td>
+            <td>{{ s.username }}</td>
+            <td>{{ s.email or '-' }}</td>
+            <td>
+                {% if s.staff_status == 'pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% elif s.staff_status == 'approved' %}
+                    <span class="badge bg-success">Approved</span>
+                {% else %}
+                    <span class="badge bg-dark">Blacklisted</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if s.approval_status == 'pending' %}
+                    <form method="POST" action="{{ url_for('admin.approve_staff', user_id=s.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-success"><i class="fa-solid fa-check"></i> Approve</button>
+                    </form>
+                {% endif %}
+                {% if s.staff_status != 'blacklisted' %}
+                    <form method="POST" action="{{ url_for('admin.blacklist_staff', user_id=s.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this staff member?');">
+                        <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-ban"></i> Blacklist</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5" class="text-center text-muted">No staff found.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

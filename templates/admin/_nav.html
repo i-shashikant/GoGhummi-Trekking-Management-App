@@ -1,0 +1,7 @@
+{% macro admin_navlinks() %}
+<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.treks') }}">Treks</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.staff') }}">Staff</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.users') }}">Users</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.bookings') }}">Bookings</a></li>
+{% endmacro %}

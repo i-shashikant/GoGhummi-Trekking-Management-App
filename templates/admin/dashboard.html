@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% import "admin/_nav.html" as nav %}
+{% block title %}Admin Dashboard | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card bg-stat-1">
+            <h2>{{ total_treks }}</h2>
+            <small>Total Treks</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card bg-stat-2">
+            <h2>{{ total_users }}</h2>
+            <small>Total Users</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card bg-stat-3">
+            <h2>{{ total_staff }}</h2>
+            <small>Total Staff</small>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card bg-stat-4">
+            <h2>{{ total_bookings }}</h2>
+            <small>Total Bookings</small>
+        </div>
+    </div>
+</div>
+
+{% if pending_staff > 0 %}
+<div class="alert alert-warning">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    You have <strong>{{ pending_staff }}</strong> staff registration(s) pending approval.
+    <a href="{{ url_for('admin.staff') }}" class="alert-link">Review now</a>
+</div>
+{% endif %}
+
+<div class="card card-trek p-3">
+    <h5>Recent Bookings</h5>
+    {% if recent_bookings %}
+    <table class="table table-hover mt-2">
+        <thead><tr><th>Booking ID</th><th>User</th><th>Trek</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>
+        {% for b in recent_bookings %}
+            <tr>
+                <td>{{ b.booking_id }}</td>
+                <td>{{ b.user.username }}</td>
+                <td>{{ b.trek.name }}</td>
+                <td><span class="badge bg-secondary">{{ b.status }}</span></td>
+                <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No bookings yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

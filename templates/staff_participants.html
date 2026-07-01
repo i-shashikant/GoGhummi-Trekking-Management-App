@@ -19,7 +19,8 @@ Participants
                 <th>User ID</th>
                 <th>Username</th>
                 <th>Email</th>
-        
+                <th>Booking Date</th>
+                <th>Status</th>
             </tr>
         </thead>
 
@@ -28,9 +29,11 @@ Participants
         {% for user in participants %}
 
             <tr>
-                <td>{{ user[0] }}</td>
-                <td>{{ user[1] }}</td>
-                <td>{{ user[2] }}</td>
+                <td>{{ booking.user.id }}</td>
+                <td>{{ booking.user.username }}</td>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.status }}</td>
             </tr>
 
         {% endfor %}

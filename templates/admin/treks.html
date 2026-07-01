@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "admin/_nav.html" as nav %}
+{% block title %}Manage Treks | TrekManager{% endblock %}
+{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="fa-solid fa-route"></i> Manage Treks</h2>
+    <a href="{{ url_for('admin.add_trek') }}" class="btn btn-trek"><i class="fa-solid fa-plus"></i> Add Trek</a>
+</div>
+
+<form method="GET" class="mb-3 d-flex">
+    <input type="text" name="q" class="form-control me-2" placeholder="Search treks by name..." value="{{ q }}">
+    <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i></button>
+</form>
+
+<div class="table-responsive">
+<table class="table table-hover align-middle bg-white">
+    <thead>
+        <tr>
+            <th>Name</th><th>Location</th><th>Difficulty</th><th>Slots</th>
+            <th>Staff</th><th>Status</th><th>Dates</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for t in treks %}
+        <tr>
+            <td>{{ t.trek_name }}</td>
+            <td>{{ t.location }}</td>
+            <td><span class="badge badge-difficulty-{{ t.difficulty }}">{{ t.difficulty }}</span></td>
+            <td>{{ t.available_slots }} / {{ t.max_slots }}</td>
+            <td>
+                {% if t.assigned_staff_id %}
+                    {{ t.assigned_staff.username }}
+                {% else %}
+                    <form method="POST" action="{{ url_for('admin.assign_staff', trek_id=t.id) }}" class="d-flex">
+                        <select name="staff_id" class="form-select form-select-sm me-1" required>
+                            <option value="">Assign...</option>
+                            {% for s in staff_list %}
+                            <option value="{{ s.id }}">{{ s.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-sm btn-trek">Go</button>
+                    </form>
+                {% endif %}
+            </td>
+            <td><span class="badge badge-status-{{ t.status }}">{{ t.status }}</span></td>
+            <td>{{ t.start_date.strftime('%d %b') }} - {{ t.end_date.strftime('%d %b %Y') }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_trek', trek_id=t.id) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></a>
+                <form method="POST" action="{{ url_for('admin.delete_trek', trek_id=t.id) }}" class="d-inline" onsubmit="return confirm('Delete this trek?');">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="8" class="text-center text-muted">No treks found.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
