@@ -48,12 +48,14 @@ def dashboard():
 @admin_bp.route("/treks")
 def treks():
 
-    treks = Trek.query.all()
+    q = request.args.get("q", "").strip()
+    query = Trek.query
 
-    return render_template(
-        "admin/treks.html",
-        treks=treks
-    )
+    if q:
+        query = query.filter(Trek.trek_name.ilike(f"%{q}%"))
+    treks = query.order_by(Trek.start_date).all()
+    staff_list = User.query.filter_by(role="staff", approval_status="Approved").all()
+    return render_template("admin/treks.html", treks=treks, staff_list=staff_list, q=q)
 
 @admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
 def edit_trek(trek_id):
@@ -98,35 +100,36 @@ def add_trek():
 
     if request.method == "POST":
 
-        max_slots = int(request.form.get("max_slots"))
-        start_date = datetime.strptime( request.form.get("start_date"), "%Y-%m-%d" ).date()
-        end_date = datetime.strptime( request.form.get("end_date"), "%Y-%m-%d" ).date()
-        duration = int(request.form.get("duration"))
-        assigned_staff_id = int(request.form.get("assigned_staff_id")) if request.form.get("assigned_staff_id") else None
+        max_slots = int(request.form["max_slots"])
 
         new_trek = Trek(
-            trek_name=request.form.get("trek_name"),
-            location=request.form.get("location"),
-            difficulty=request.form.get("difficulty"),
-            start_date=start_date,
-            end_date=end_date,
-            duration=duration,
+            trek_name=request.form["trek_name"],
+            location=request.form["location"],
+            difficulty=request.form["difficulty"],
+            start_date=datetime.strptime(
+                request.form["start_date"],
+                "%Y-%m-%d"
+            ).date(),
+            end_date=datetime.strptime(
+                request.form["end_date"],
+                "%Y-%m-%d"
+            ).date(),
+            duration=int(request.form["duration"]),
             max_slots=max_slots,
             available_slots=max_slots,
-            description=request.form.get("description"),
-            status=request.form.get("status"),
-            assigned_staff_id=assigned_staff_id
-            
+            description=request.form["description"],
+            status=request.form["status"],
+            assigned_staff_id=request.form.get("assigned_staff_id") or None
         )
 
         db.session.add(new_trek)
         db.session.commit()
 
-        return redirect(url_for("admin.add_trek"))
+        return redirect(url_for("admin.treks"))
 
     return render_template(
         "admin/add_trek.html",
-        approved_staff=approved_staff
+        staff_list=approved_staff
     )
 
 @admin_bp.route("/treks/delete/<int:trek_id>", methods=["POST"])
@@ -166,3 +169,47 @@ def approve_staff(staff_id):
     db.session.commit()
 
     return redirect(url_for("admin.staff"))
+
+@admin_bp.route("/users")
+def users():
+    return render_template(
+        "admin/users.html",
+        users=[]
+    )
+
+
+@admin_bp.route("/bookings")
+def bookings():
+    return render_template(
+        "admin/bookings.html",
+        bookings=[]
+    )
+
+
+# @admin_bp.route("/staff")
+# def staff():
+#     staff_list = User.query.filter_by(role="staff").all()
+
+#     return render_template(
+#         "admin/staff.html",
+#         staff_list=staff_list,
+#         q=""
+#     )
+
+
+# @admin_bp.route("/treks")
+# def treks():
+
+#     treks = Trek.query.all()
+
+#     staff_list = User.query.filter_by(
+#         role="staff",
+#         approval_status="Approved"
+#     ).all()
+
+#     return render_template(
+#         "admin/treks.html",
+#         treks=treks,
+#         staff_list=staff_list,
+#         q=""
+#     )
