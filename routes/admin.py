@@ -62,23 +62,51 @@ def edit_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
 
-    approved_staff = User.query.filter_by(
+    if trek is None:
+        return "Trek not found", 404
+
+    staff_list = User.query.filter_by(
         role="staff",
         approval_status="Approved"
     ).all()
+    old_max_slots = trek.max_slots
+    old_available_slots = trek.available_slots
+    booked_slots = old_max_slots - old_available_slots
 
     if request.method == "POST":
-        trek.trek_name = request.form.get("trek_name")
-        trek.location = request.form.get("location")
-        trek.difficulty = request.form.get("difficulty")
 
-        trek.start_date = datetime.strptime(request.form.get("start_date"),"%Y-%m-%d").date()
-        trek.end_date = datetime.strptime(request.form.get("end_date"),"%Y-%m-%d").date()
-        trek.duration = int(request.form.get("duration"))
-        trek.max_slots = int(request.form.get("max_slots"))
-        trek.description = request.form.get("description")
-        trek.status = request.form.get("status")
-        trek.assigned_staff_id = request.form.get("assigned_staff_id") or None
+        trek.trek_name = request.form["trek_name"]
+        trek.location = request.form["location"]
+        trek.difficulty = request.form["difficulty"]
+        trek.start_date = datetime.strptime(
+            request.form["start_date"],
+            "%Y-%m-%d"
+        ).date()
+
+        trek.end_date = datetime.strptime(
+            request.form["end_date"],
+            "%Y-%m-%d"
+        ).date()
+
+        trek.duration = int(request.form["duration"])
+
+        new_max_slots = int(request.form["max_slots"])
+
+        new_max_slots = int(request.form["max_slots"])
+
+        if new_max_slots < booked_slots:
+            return (
+                f"Cannot reduce maximum slots below the number of booked participants ({booked_slots})."
+            )
+        trek.max_slots = new_max_slots
+        trek.available_slots = new_max_slots - booked_slots
+        trek.description = request.form["description"]
+
+        trek.status = request.form["status"]
+
+        trek.assigned_staff_id = (
+            request.form.get("assigned_staff_id") or None
+        )
 
         db.session.commit()
 
@@ -87,7 +115,7 @@ def edit_trek(trek_id):
     return render_template(
         "admin/edit_trek.html",
         trek=trek,
-        approved_staff=approved_staff
+        staff_list=staff_list
     )
 
 @admin_bp.route("/treks/add", methods=["GET", "POST"])
@@ -136,9 +164,13 @@ def add_trek():
 def delete_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
-    
+
     if trek is None:
-        return "Trek not found"
+        return "Trek not found", 404
+
+    # Prevent deleting a trek that has bookings
+    if trek.bookings:
+        return "Cannot delete a trek that has bookings."
 
     db.session.delete(trek)
     db.session.commit()
@@ -186,30 +218,21 @@ def bookings():
     )
 
 
-# @admin_bp.route("/staff")
-# def staff():
-#     staff_list = User.query.filter_by(role="staff").all()
+@admin_bp.route("/treks/assign/<int:trek_id>", methods=["POST"])
+def assign_staff(trek_id):
 
-#     return render_template(
-#         "admin/staff.html",
-#         staff_list=staff_list,
-#         q=""
-#     )
+    trek = db.session.get(Trek, trek_id)
 
+    if trek is None:
+        return "Trek not found", 404
 
-# @admin_bp.route("/treks")
-# def treks():
+    staff_id = request.form.get("assigned_staff_id")
 
-#     treks = Trek.query.all()
+    if staff_id:
+        trek.assigned_staff_id = int(staff_id)
+    else:
+        trek.assigned_staff_id = None
 
-#     staff_list = User.query.filter_by(
-#         role="staff",
-#         approval_status="Approved"
-#     ).all()
+    db.session.commit()
 
-#     return render_template(
-#         "admin/treks.html",
-#         treks=treks,
-#         staff_list=staff_list,
-#         q=""
-#     )
+    return redirect(url_for("admin.treks"))

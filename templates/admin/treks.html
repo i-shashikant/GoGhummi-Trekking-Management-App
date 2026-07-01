@@ -18,7 +18,7 @@
     <thead>
         <tr>
             <th>Name</th><th>Location</th><th>Difficulty</th><th>Slots</th>
-            <th>Staff</th><th>Status</th><th>Dates</th><th>Actions</th>
+            <th>Staff</th><th>Status</th><th>Dates</th><th>Actions</th> 
         </tr>
     </thead>
     <tbody>
@@ -28,9 +28,45 @@
             <td>{{ t.location }}</td>
             <td><span class="badge badge-difficulty-{{ t.difficulty }}">{{ t.difficulty }}</span></td>
             <td>{{ t.available_slots }} / {{ t.max_slots }}</td>
-            <td>
-                
-            </td>
+            <td>{% if t.assigned_staff %}
+
+                    <strong>{{ t.assigned_staff.username }}</strong>
+
+                {% else %}
+
+                <form method="POST"
+                    action="{{ url_for('admin.assign_staff', trek_id=t.id) }}"
+                    class="d-flex">
+
+                    <select name="assigned_staff_id"
+                            class="form-select form-select-sm me-2"
+                            required>
+
+                        <option value="">Assign...</option>
+
+                        {% for s in staff_list %}
+                            <option value="{{ s.id }}">
+                                {{ s.username }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+
+                    <button class="btn btn-sm btn-success">
+                        Assign
+                    </button>
+
+                </form>
+
+                {% endif %}</td>
+
+
+            <td><form method="POST" action="{{ url_for('admin.delete_trek', trek_id=t.id) }}" class="d-inline" onsubmit="return confirm('Delete this trek?');">
+
+                <button class="btn btn-sm btn-outline-danger">
+                    <i class="fa-solid fa-trash">Trash</i>
+                </button>
+            </form></td>
         </tr>
     {% else %}
         <tr><td colspan="8" class="text-center text-muted">No treks found.</td></tr>
