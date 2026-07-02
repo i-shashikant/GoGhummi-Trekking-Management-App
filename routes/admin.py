@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from config import db
 from models.trek import Trek
 from models.user import User
@@ -110,6 +110,7 @@ def edit_trek(trek_id):
 
         db.session.commit()
 
+        flash("Trek updated successfully.", "success")
         return redirect(url_for("admin.treks"))
 
     return render_template(
@@ -153,6 +154,7 @@ def add_trek():
         db.session.add(new_trek)
         db.session.commit()
 
+        flash("Trek created successfully.", "success")
         return redirect(url_for("admin.treks"))
 
     return render_template(

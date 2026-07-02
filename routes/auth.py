@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, request, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User
 from config import db
@@ -30,14 +30,18 @@ def login():
             elif user.role == "staff":
 
                 if user.approval_status == "Pending":
-                    return "Waiting for admin approval."
+                    flash("Your staff account is pending admin approval.", "warning")
+                    return redirect(url_for("auth.login"))
 
+                flash("Login Succesfull.", "success")
                 return redirect(url_for("staff.dashboard"))
 
             else:
+                flash("Login Succesfull.", "success")
                 return redirect(url_for("user.dashboard"))
 
-        return "Invalid username or password"
+        flash("Invalid username or password.", "danger")
+        return redirect(url_for("auth.login"))
 
     return render_template("login.html")
 
@@ -50,10 +54,16 @@ def register():
         role = request.form.get("role")
 
         existing_user = User.query.filter_by(username=username).first()
+        existing_email = User.query.filter_by(email=email).first()
 
         if existing_user:
-            return render_template("register.html", error="Username already exists")
-        
+            flash("Username already exists.", "danger")
+            return redirect(url_for("auth.register"))
+
+        if existing_email:
+            flash("Email already exists.", "danger")
+            return redirect(url_for("auth.register"))
+
         if role == "staff":
             approval_status = "Pending"
         else:
@@ -63,6 +73,16 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
+        flash("Registration successful! Please log in.", "success")
         return redirect(url_for("auth.login"))
 
     return render_template("register.html")
+
+@auth_bp.route("/logout")
+def logout():
+
+    session.clear()
+
+    flash("Logged out successfully.", "info")
+
+    return redirect(url_for("auth.login"))
