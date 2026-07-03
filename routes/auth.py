@@ -19,6 +19,9 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
+            if user.approval_status == "Blacklisted":
+                flash("Your account has been blacklisted. Please contact the administrator.", "danger")
+                return redirect(url_for("auth.login"))
 
             session["user_id"] = user.id
             session["username"] = user.username
