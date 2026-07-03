@@ -65,5 +65,5 @@ def update_trek(trek_id):
     trek.status = request.form["status"]
 
     db.session.commit()
-
+    flash("Trek status updated successfully.", "success")
     return redirect(url_for("staff.dashboard"))

@@ -176,7 +176,7 @@ def delete_trek(trek_id):
 
     db.session.delete(trek)
     db.session.commit()
-
+    flash("Trek deleted successfully.", "success")
     return redirect(url_for("admin.treks"))
 
 @admin_bp.route("/staff")
@@ -209,7 +209,7 @@ def approve_staff(user_id):
     staff.approval_status = "Approved"
 
     db.session.commit()
-
+    flash("Staff approved successfully.", "success")
     return redirect(url_for("admin.staff"))
 
 @admin_bp.route("/staff/blacklist/<int:user_id>", methods=["POST"])
@@ -243,7 +243,7 @@ def assign_staff(trek_id):
         trek.assigned_staff_id = None
 
     db.session.commit()
-
+    flash("Staff assigned successfully.", "success")
     return redirect(url_for("admin.treks"))
 
 

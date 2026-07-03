@@ -108,15 +108,18 @@ def book_trek(trek_id):
     ).first()
 
     if existing:
-        return "You have already booked this trek."
+        flash("You have already booked this trek.", "warning")
+        return redirect(url_for("user.trek_detail", trek_id=trek.id))
 
     # Trek must be open
     if trek.status != "Open":
-        return "This trek is not open for booking."
+        flash("This trek is not open for booking.", "danger")
+        return redirect(url_for("user.trek_detail", trek_id=trek.id))
 
     # Slots available?
     if trek.available_slots <= 0:
-        return "No slots available."
+        flash("No slots available for this trek.", "danger")
+        return redirect(url_for("user.trek_detail", trek_id=trek.id))
 
     booking = Booking(
         user_id=user.id,
@@ -129,7 +132,7 @@ def book_trek(trek_id):
 
     db.session.add(booking)
     db.session.commit()
-
+    flash("Trek booked successfully!", "success")
     return redirect(url_for("user.my_bookings"))
 
 @user_bp.route("/bookings")
@@ -167,5 +170,5 @@ def cancel_booking(booking_id):
     trek.available_slots += 1
 
     db.session.commit()
-
+    flash("Booking cancelled successfully.", "info")
     return redirect(url_for("user.my_bookings"))
