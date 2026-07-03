@@ -3,33 +3,52 @@
 {% block title %}Admin Dashboard | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
-<h2 class="mb-4"><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
+<div class="mb-4">
 
-<div class="row g-3 mb-4">
-    <div class="col-md-3 col-6">
-        <div class="stat-card bg-stat-1">
+    <h1 class="fw-bold">
+        👋 Welcome back, {{ session["username"] }}
+    </h1>
+
+    <p class="text-secondary">
+        Here's a quick overview of your trekking management system.
+    </p>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-3">
+        <div class="card card-trek text-center p-4 h-100">
+            <i class="fa-solid fa-mountain fa-2x text-primary mb-3"></i>
             <h2>{{ total_treks }}</h2>
-            <small>Total Treks</small>
+            <p class="mb-0 text-secondary">Total Treks</p>
         </div>
     </div>
-    <div class="col-md-3 col-6">
-        <div class="stat-card bg-stat-2">
+
+    <div class="col-md-3">
+        <div class="card card-trek text-center p-4 h-100">
+            <i class="fa-solid fa-users fa-2x text-success mb-3"></i>
             <h2>{{ total_users }}</h2>
-            <small>Total Users</small>
+            <p class="mb-0 text-secondary">Total Users</p>
         </div>
     </div>
-    <div class="col-md-3 col-6">
-        <div class="stat-card bg-stat-3">
+
+    <div class="col-md-3">
+        <div class="card card-trek text-center p-4 h-100">
+            <i class="fa-solid fa-user-tie fa-2x text-warning mb-3"></i>
             <h2>{{ total_staff }}</h2>
-            <small>Total Staff</small>
+            <p class="mb-0 text-secondary">Total Staff</p>
         </div>
     </div>
-    <div class="col-md-3 col-6">
-        <div class="stat-card bg-stat-4">
+
+    <div class="col-md-3">
+        <div class="card card-trek text-center p-4 h-100">
+            <i class="fa-solid fa-calendar-check fa-2x text-info mb-3"></i>
             <h2>{{ total_bookings }}</h2>
-            <small>Total Bookings</small>
+            <p class="mb-0 text-secondary">Total Bookings</p>
         </div>
     </div>
+
 </div>
 
 {% if pending_staff > 0 %}
@@ -40,8 +59,11 @@
 </div>
 {% endif %}
 
-<div class="card card-trek p-3">
-    <h5>Recent Bookings</h5>
+<div class="card card-trek p-4">
+    <h4 class="mb-4">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        Recent Bookings
+    </h4>
     {% if recent_bookings %}
     <table class="table table-hover mt-2">
         <thead><tr><th>Booking ID</th><th>User</th><th>Trek</th><th>Status</th><th>Date</th></tr></thead>

@@ -34,3 +34,49 @@
     text-align: center;
     margin-top: 30px;
 } */
+
+.card-trek{
+    background:#171717;
+    border:1px solid #2f2f2f;
+    border-radius:18px;
+    transition:.25s;
+}
+
+.card-trek:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.table{
+    color:white;
+}
+
+.table thead{
+    border-color:#444;
+}
+
+.table td,
+.table th{
+    border-color:#333;
+}
+
+.text-secondary{
+    color:#9ca3af !important;
+}
+
+.list-group-item.active{
+    background:#0d6efd !important;
+    border-radius:12px;
+    color:white !important;
+    font-weight:600;
+}
+
+.list-group-item{
+    margin-bottom:8px;
+    border-radius:12px;
+    transition:.2s;
+}
+
+.list-group-item:hover{
+    transform:translateX(6px);
+}
