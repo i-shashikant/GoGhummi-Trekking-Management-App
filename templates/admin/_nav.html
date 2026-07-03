@@ -1,7 +1,45 @@
-{% macro admin_navlinks() %}
-<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.treks') }}">Treks</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.staff') }}">Staff</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.users') }}">Users</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('admin.bookings') }}">Bookings</a></li>
+{% macro admin_sidebar() %}
+
+<div class="list-group list-group-flush">
+
+    <a href="{{ url_for('admin.dashboard') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-chart-line me-2"></i>
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('admin.treks') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-mountain me-2"></i>
+        Treks
+    </a>
+
+    <a href="{{ url_for('admin.staff') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-user-tie me-2"></i>
+        Staff
+    </a>
+
+    <a href="{{ url_for('admin.users') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-users me-2"></i>
+        Users
+    </a>
+
+    <a href="{{ url_for('admin.bookings') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-calendar-check me-2"></i>
+        Bookings
+    </a>
+
+    <hr class="text-secondary">
+
+    <a href="{{ url_for('auth.logout') }}"
+       class="list-group-item list-group-item-action bg-black text-danger border-0 py-3">
+        <i class="fa-solid fa-right-from-bracket me-2"></i>
+        Logout
+    </a>
+
+</div>
+
 {% endmacro %}

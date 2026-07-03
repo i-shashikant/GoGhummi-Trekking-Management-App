@@ -1,6 +1,39 @@
-{% extends "base.html" %}{% macro user_navlinks() %}
-<li class="nav-item"><a class="nav-link" href="{{ url_for('user.dashboard') }}">Dashboard</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('user.browse_treks') }}">Browse Treks</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('user.my_bookings') }}">My Bookings</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ url_for('user.profile') }}">Profile</a></li>
+{% macro user_sidebar() %}
+
+<div class="list-group list-group-flush">
+
+    <a href="{{ url_for('user.dashboard') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-house me-2"></i>
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('user.browse_treks') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-mountain me-2"></i>
+        Browse Treks
+    </a>
+
+    <a href="{{ url_for('user.my_bookings') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-ticket me-2"></i>
+        My Bookings
+    </a>
+
+    <a href="{{ url_for('user.profile') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-user me-2"></i>
+        Profile
+    </a>
+
+    <hr class="text-secondary">
+
+    <a href="{{ url_for('auth.logout') }}"
+       class="list-group-item list-group-item-action bg-black text-danger border-0 py-3">
+        <i class="fa-solid fa-right-from-bracket me-2"></i>
+        Logout
+    </a>
+
+</div>
+
 {% endmacro %}

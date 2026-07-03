@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "layouts/dashboard.html" %}
 {% import "user/_nav.html" as nav %}
 {% block title %}My Bookings | TrekManager{% endblock %}
-{% block navlinks %}{{ nav.user_navlinks() }}{% endblock %}
+{% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
 <h2 class="mb-4"><i class="fa-solid fa-clipboard-list"></i> My Bookings</h2>
 

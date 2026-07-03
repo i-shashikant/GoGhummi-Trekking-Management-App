@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "layouts/dashboard.html" %}
 {% import "user/_nav.html" as nav %}
 {% block title %}{{ trek.trek_name }} | TrekManager{% endblock %}
-{% block navlinks %}{{ nav.user_navlinks() }}{% endblock %}
+{% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
 <a href="{{ url_for('user.browse_treks') }}" class="btn btn-link mb-2"><i class="fa-solid fa-arrow-left"></i> Back to Treks</a>
 

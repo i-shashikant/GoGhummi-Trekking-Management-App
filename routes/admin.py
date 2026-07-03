@@ -99,8 +99,12 @@ def edit_trek(trek_id):
         new_max_slots = int(request.form["max_slots"])
 
         if new_max_slots < booked_slots:
-            return (
-                f"Cannot reduce maximum slots below the number of booked participants ({booked_slots})."
+            flash(
+                f"Cannot reduce maximum slots below the number of booked participants ({booked_slots}).",
+                "danger"
+            )
+            return redirect(
+                url_for("admin.edit_trek", trek_id=trek.id)
             )
         trek.max_slots = new_max_slots
         trek.available_slots = new_max_slots - booked_slots
@@ -288,7 +292,7 @@ def blacklist_user(user_id):
     user.approval_status = "Blacklisted"
 
     db.session.commit()
-
+    flash("Staff blacklisted successfully.", "warning")
     return redirect(url_for("admin.users"))
 
 @admin_bp.route("/users/activate/<int:user_id>", methods=["POST"])

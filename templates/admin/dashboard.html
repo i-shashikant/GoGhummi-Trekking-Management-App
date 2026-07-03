@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "layouts/dashboard.html" %}
 {% import "admin/_nav.html" as nav %}
 {% block title %}Admin Dashboard | TrekManager{% endblock %}
-{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
 <h2 class="mb-4"><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
 

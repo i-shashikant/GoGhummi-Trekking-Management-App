@@ -38,6 +38,25 @@ def dashboard():
         my_bookings=my_bookings
     )
 
+@user_bp.route("/profile")
+@user_required
+def profile():
+
+    user = db.session.get(User, session["user_id"])
+
+    total_bookings = Booking.query.filter_by(
+        user_id=user.id
+    ).count()
+
+    return render_template(
+        "user/profile.html",
+        user=user,
+        total_bookings=total_bookings
+    )
+
+
+
+
 @user_bp.route("/treks")
 @user_required
 def browse_treks():

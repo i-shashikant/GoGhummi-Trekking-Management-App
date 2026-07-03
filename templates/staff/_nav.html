@@ -1,3 +1,27 @@
-{% macro staff_navlinks() %}
-<li class="nav-item"><a class="nav-link" href="{{ url_for('staff.dashboard') }}">My Treks</a></li>
+{% macro staff_sidebar() %}
+
+<div class="list-group list-group-flush">
+
+    <a href="{{ url_for('staff.dashboard') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-chart-line me-2"></i>
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('staff.assigned_treks') }}"
+       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+        <i class="fa-solid fa-mountain me-2"></i>
+        Assigned Treks
+    </a>
+
+    <hr class="text-secondary">
+
+    <a href="{{ url_for('auth.logout') }}"
+       class="list-group-item list-group-item-action bg-black text-danger border-0 py-3">
+        <i class="fa-solid fa-right-from-bracket me-2"></i>
+        Logout
+    </a>
+
+</div>
+
 {% endmacro %}
