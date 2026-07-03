@@ -3,10 +3,12 @@ from config import db
 from models.trek import Trek
 from models.user import User
 from models.booking import Booking
+from utils.auth import staff_required
 
 staff_bp = Blueprint("staff", __name__)
 
 @staff_bp.route("/")
+@staff_required
 def dashboard():
 
     user = db.session.get(User, session["user_id"])
@@ -25,6 +27,7 @@ def dashboard():
 
 
 @staff_bp.route("/treks")
+@staff_required
 def assigned_treks():
 
     user = db.session.get(User, session["user_id"])
@@ -41,6 +44,7 @@ def assigned_treks():
     )
 
 @staff_bp.route("/participants/<int:trek_id>")
+@staff_required
 def participants(trek_id):
 
     trek = db.session.get(Trek, trek_id)
@@ -55,6 +59,7 @@ def participants(trek_id):
     )
 
 @staff_bp.route("/update/<int:trek_id>", methods=["POST"])
+@staff_required
 def update_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)

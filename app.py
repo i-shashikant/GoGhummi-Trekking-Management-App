@@ -10,7 +10,9 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
-app.secret_key = "trekking_secret_key"
+
+class Config:
+    SECRET_KEY = "trekking_secret_key"
 
 for bp in all_blueprints:
     app.register_blueprint(bp)

@@ -4,12 +4,14 @@ from models.trek import Trek
 from models.user import User
 from models.booking import Booking
 from datetime import datetime
+from utils.auth import admin_required
 
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 @admin_bp.route("/")
+@admin_required
 def dashboard():
 
     total_treks = Trek.query.count()
@@ -46,6 +48,7 @@ def dashboard():
     )
 
 @admin_bp.route("/treks")
+@admin_required
 def treks():
 
     q = request.args.get("q", "").strip()
@@ -58,6 +61,7 @@ def treks():
     return render_template("admin/treks.html", treks=treks, staff_list=staff_list, q=q)
 
 @admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
+@admin_required
 def edit_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
@@ -120,6 +124,7 @@ def edit_trek(trek_id):
     )
 
 @admin_bp.route("/treks/add", methods=["GET", "POST"])
+@admin_required
 def add_trek():
 
     approved_staff = User.query.filter_by(
@@ -163,6 +168,7 @@ def add_trek():
     )
 
 @admin_bp.route("/treks/delete/<int:trek_id>", methods=["POST"])
+@admin_required
 def delete_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
@@ -180,6 +186,7 @@ def delete_trek(trek_id):
     return redirect(url_for("admin.treks"))
 
 @admin_bp.route("/staff")
+@admin_required
 def staff():
 
     q = request.args.get("q", "").strip()
@@ -199,6 +206,7 @@ def staff():
 
 
 @admin_bp.route("/staff/approve/<int:user_id>", methods=["POST"])
+@admin_required
 def approve_staff(user_id):
 
     staff = db.session.get(User, user_id)
@@ -213,6 +221,7 @@ def approve_staff(user_id):
     return redirect(url_for("admin.staff"))
 
 @admin_bp.route("/staff/blacklist/<int:user_id>", methods=["POST"])
+@admin_required
 def blacklist_staff(user_id):
 
     staff = db.session.get(User, user_id)
@@ -228,6 +237,7 @@ def blacklist_staff(user_id):
 
 
 @admin_bp.route("/treks/assign/<int:trek_id>", methods=["POST"])
+@admin_required
 def assign_staff(trek_id):
 
     trek = db.session.get(Trek, trek_id)
@@ -248,6 +258,7 @@ def assign_staff(trek_id):
 
 
 @admin_bp.route("/users")
+@admin_required
 def users():
 
     q = request.args.get("q", "").strip()
@@ -266,6 +277,7 @@ def users():
     )
 
 @admin_bp.route("/users/blacklist/<int:user_id>", methods=["POST"])
+@admin_required
 def blacklist_user(user_id):
 
     user = db.session.get(User, user_id)
@@ -280,6 +292,7 @@ def blacklist_user(user_id):
     return redirect(url_for("admin.users"))
 
 @admin_bp.route("/users/activate/<int:user_id>", methods=["POST"])
+@admin_required
 def activate_user(user_id):
 
     user = db.session.get(User, user_id)
@@ -295,6 +308,7 @@ def activate_user(user_id):
 
 
 @admin_bp.route("/bookings")
+@admin_required
 def bookings():
 
     bookings = (

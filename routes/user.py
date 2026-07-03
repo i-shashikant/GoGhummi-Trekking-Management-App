@@ -4,10 +4,13 @@ from models.booking import Booking
 from models.user import User
 from datetime import date
 from config import db
+from utils.auth import user_required
+
 
 user_bp = Blueprint("user", __name__, url_prefix="/user")
 
 @user_bp.route("/")
+@user_required
 def dashboard():
 
     user = db.session.get(User, session["user_id"])
@@ -36,6 +39,7 @@ def dashboard():
     )
 
 @user_bp.route("/treks")
+@user_required
 def browse_treks():
 
     q = request.args.get("q", "").strip()
@@ -72,6 +76,7 @@ def browse_treks():
     )
 
 @user_bp.route("/treks/<int:trek_id>")
+@user_required
 def trek_detail(trek_id):
 
     trek = db.session.get(Trek, trek_id)
@@ -92,6 +97,7 @@ def trek_detail(trek_id):
     )
 
 @user_bp.route("/book/<int:trek_id>", methods=["POST"])
+@user_required
 def book_trek(trek_id):
 
     user = db.session.get(User, session["user_id"])
@@ -136,6 +142,7 @@ def book_trek(trek_id):
     return redirect(url_for("user.my_bookings"))
 
 @user_bp.route("/bookings")
+@user_required
 def my_bookings():
 
     bookings = (
@@ -151,6 +158,7 @@ def my_bookings():
     )
 
 @user_bp.route("/cancel/<int:booking_id>", methods=["POST"])
+@user_required
 def cancel_booking(booking_id):
 
     booking = db.session.get(Booking, booking_id)
