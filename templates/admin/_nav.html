@@ -3,31 +3,56 @@
 <div class="list-group list-group-flush">
 
     <a href="{{ url_for('admin.dashboard') }}"
-       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+       class="list-group-item list-group-item-action border-0 py-3
+        {% if current == 'admin.dashboard' %}
+        active bg-primary text-white
+        {% else %}
+        bg-black text-white
+        {% endif %}" >
         <i class="fa-solid fa-chart-line me-2"></i>
         Dashboard
     </a>
 
     <a href="{{ url_for('admin.treks') }}"
-       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+       class="list-group-item list-group-item-action border-0 py-3
+        {% if current in ['admin.treks','admin.add_trek','admin.edit_trek'] %}
+        active bg-primary text-white
+        {% else %}
+        bg-black text-white
+        {% endif %}">
         <i class="fa-solid fa-mountain me-2"></i>
         Treks
     </a>
 
     <a href="{{ url_for('admin.staff') }}"
-       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+       class="list-group-item list-group-item-action border-0 py-3
+        {% if current == 'admin.staff' %}
+        active bg-primary text-white
+        {% else %}
+        bg-black text-white
+        {% endif %}">
         <i class="fa-solid fa-user-tie me-2"></i>
         Staff
     </a>
 
     <a href="{{ url_for('admin.users') }}"
-       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+       class="list-group-item list-group-item-action border-0 py-3
+        {% if current == 'admin.users' %}
+        active bg-primary text-white
+        {% else %}
+        bg-black text-white
+        {% endif %}">
         <i class="fa-solid fa-users me-2"></i>
         Users
     </a>
 
     <a href="{{ url_for('admin.bookings') }}"
-       class="list-group-item list-group-item-action bg-black text-white border-0 py-3">
+       class="list-group-item list-group-item-action border-0 py-3
+        {% if current == 'admin.bookings' %}
+        active bg-primary text-white
+        {% else %}
+        bg-black text-white
+        {% endif %}">
         <i class="fa-solid fa-calendar-check me-2"></i>
         Bookings
     </a>

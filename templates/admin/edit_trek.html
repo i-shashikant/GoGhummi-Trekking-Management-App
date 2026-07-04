@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "layouts/dashboard.html" %}
 {% import "admin/_nav.html" as nav %}
 {% block title %}Edit Trek | TrekManager{% endblock %}
-{% block navlinks %}{{ nav.admin_navlinks() }}{% endblock %}
+{% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
 <h2 class="mb-4"><i class="fa-solid fa-pen"></i> Edit Trek: {{ trek.trek_name }}</h2>
 <div class="card card-trek p-4">
