@@ -3,6 +3,13 @@
 {% block title %}{{ trek.trek_name }} | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/trek_detail.css') }}">
+{% endblock %}
+
+
 <a href="{{ url_for('user.browse_treks') }}" class="btn btn-link mb-2"><i class="fa-solid fa-arrow-left"></i> Back to Treks</a>
 
 <div class="card card-trek p-4">

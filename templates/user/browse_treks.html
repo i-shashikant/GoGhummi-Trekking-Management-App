@@ -3,6 +3,12 @@
 {% block title %}Browse Treks | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/browse_treks.css') }}">
+{% endblock %}
+
 <h2 class="mb-4"><i class="fa-solid fa-magnifying-glass"></i> Browse Treks</h2>
 
 <form method="GET" class="row g-2 mb-4">

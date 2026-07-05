@@ -3,6 +3,12 @@
 {% block title %}Dashboard | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+{% endblock %}
+
 <h2 class="mb-4">Welcome, {{ user.username }} <i class="fa-solid fa-person-hiking"></i></h2>
 
 <div class="d-flex justify-content-between align-items-center mb-3">

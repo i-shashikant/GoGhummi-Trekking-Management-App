@@ -3,6 +3,14 @@
 {% block title %}Admin Dashboard | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_sidebar.css') }}">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+{% endblock %}
+
 <div class="mb-4">
 
     <h1 class="fw-bold">

@@ -4,6 +4,12 @@
 {% block title %}Staff Dashboard | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.staff_sidebar() }}{% endblock %}
 {% block content %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/staff_dashboard.css') }}">
+{% endblock %}
+
 <h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Welcome, {{ user.username }}</h2>
 
 {% if trek_stats|length == 0 %}

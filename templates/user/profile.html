@@ -3,6 +3,12 @@
 {% block title %}My Profile | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
 <h2 class="mb-4"><i class="fa-solid fa-id-card"></i> My Profile</h2>
 <div class="row justify-content-center">
     <div class="col-lg-6 col-xl-5">
