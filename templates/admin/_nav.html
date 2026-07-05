@@ -3,18 +3,18 @@
 <div class="list-group list-group-flush">
 
     <a href="{{ url_for('admin.dashboard') }}"
-       class="list-group-item list-group-item-action border-0 py-3
+        class="list-group-item list-group-item-action border-0 py-3
         {% if current == 'admin.dashboard' %}
         active bg-primary text-white
         {% else %}
         bg-black text-white
-        {% endif %}" >
+        {% endif %}">
         <i class="fa-solid fa-chart-line me-2"></i>
         Dashboard
     </a>
 
     <a href="{{ url_for('admin.treks') }}"
-       class="list-group-item list-group-item-action border-0 py-3
+        class="list-group-item list-group-item-action border-0 py-3
         {% if current in ['admin.treks','admin.add_trek','admin.edit_trek'] %}
         active bg-primary text-white
         {% else %}

@@ -80,3 +80,20 @@
 .list-group-item:hover{
     transform:translateX(6px);
 }
+
+.table-dark{
+    --bs-table-bg:#171717;
+    --bs-table-hover-bg:#232323;
+}
+
+.card-trek table{
+    margin-bottom:0;
+}
+
+.btn-sm{
+    border-radius:8px;
+}
+
+.badge{
+    padding:.55em .8em;
+}
