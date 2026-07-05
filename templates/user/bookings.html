@@ -3,10 +3,6 @@
 {% block title %}My Bookings | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.user_sidebar() }}{% endblock %}
 {% block content %}
-{% block css %}
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/user_bookings.css') }}">
-{% endblock %}
 
 <h2 class="mb-4"><i class="fa-solid fa-clipboard-list"></i> My Bookings</h2>
 

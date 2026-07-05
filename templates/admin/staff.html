@@ -4,13 +4,6 @@
 {% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
 
-{% block css %}
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_sidebar.css') }}">
-
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_staff.css') }}">
-{% endblock %}
 
 <h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Manage Trek Staff</h2>
 

@@ -3,13 +3,7 @@
 {% block title %}Admin Dashboard | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
-{% block css %}
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_sidebar.css') }}">
 
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
-{% endblock %}
 
 <div class="mb-4">
 
@@ -78,9 +72,9 @@
         <tbody>
         {% for b in recent_bookings %}
             <tr>
-                <td>{{ b.booking_id }}</td>
+                <td>{{ b.id }}</td>
                 <td>{{ b.user.username }}</td>
-                <td>{{ b.trek.name }}</td>
+                <td>{{ b.trek.trek_name }}</td>
                 <td><span class="badge bg-secondary">{{ b.status }}</span></td>
                 <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
             </tr>

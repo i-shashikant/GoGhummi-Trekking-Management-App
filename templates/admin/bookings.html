@@ -3,15 +3,6 @@
 {% block title %}All Bookings | TrekManager{% endblock %}
 {% block sidebar %}{{ nav.admin_sidebar() }}{% endblock %}
 {% block content %}
-
-{% block css %}
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_sidebar.css') }}">
-
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin_bookings.css') }}">
-{% endblock %}
-
 <h2 class="mb-4"><i class="fa-solid fa-clipboard-list"></i> All Bookings</h2>
 <div class="table-responsive">
 <table class="table table-hover align-middle bg-white">
