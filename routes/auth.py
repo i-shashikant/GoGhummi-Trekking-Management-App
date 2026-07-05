@@ -10,7 +10,16 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
+    if "user_id" in session:
+        role = session.get("role")
 
+        if role == "admin":
+            return redirect(url_for("admin.dashboard"))
+        elif role == "staff":
+            return redirect(url_for("staff.dashboard"))
+        else:
+            return redirect(url_for("user.dashboard"))
+        
     if request.method == "POST":
 
         username = request.form.get("username")
@@ -36,11 +45,11 @@ def login():
                     flash("Your staff account is pending admin approval.", "warning")
                     return redirect(url_for("auth.login"))
 
-                flash("Login Succesfull.", "success")
+                flash("Login Successful.", "success")
                 return redirect(url_for("staff.dashboard"))
 
             else:
-                flash("Login Succesfull.", "success")
+                flash("Login Successful.", "success")
                 return redirect(url_for("user.dashboard"))
 
         flash("Invalid username or password.", "danger")
@@ -50,6 +59,16 @@ def login():
 
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
+
+    if "user_id" in session:
+        role = session.get("role")
+
+        if role == "admin":
+            return redirect(url_for("admin.dashboard"))
+        elif role == "staff":
+            return redirect(url_for("staff.dashboard"))
+        else:
+            return redirect(url_for("user.dashboard"))
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
