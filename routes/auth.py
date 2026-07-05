@@ -89,3 +89,7 @@ def logout():
     flash("Logged out successfully.", "info")
 
     return redirect(url_for("auth.login"))
+
+@auth_bp.route("/")
+def index():
+    return render_template("index.html")

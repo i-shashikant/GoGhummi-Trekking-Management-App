@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TrekManager</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/index.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <span class="navbar-brand fw-bold">
+            <i class="fa-solid fa-mountain"></i>
+            TrekManager
+        </span>
+
+        <div>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light me-2">
+                Login
+            </a>
+
+            <a href="{{ url_for('auth.register') }}" class="btn btn-success">
+                Register
+            </a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+
+    <div class="container text-center">
+
+        <h1 class="display-3 fw-bold mb-3">
+            Adventure Starts Here
+        </h1>
+
+        <p class="lead mb-4">
+            Book treks, manage expeditions and explore nature with TrekManager.
+        </p>
+
+        <a href="{{ url_for('auth.login') }}"
+           class="btn btn-primary btn-lg me-2">
+
+            Login
+
+        </a>
+
+        <a href="{{ url_for('auth.register') }}"
+           class="btn btn-success btn-lg">
+
+            Register
+
+        </a>
+
+    </div>
+
+</section>
+
+<section class="container py-5">
+
+<div class="row g-4">
+
+<div class="col-md-3">
+
+<div class="card h-100 text-center p-4">
+
+<i class="fa-solid fa-route fa-2x text-primary mb-3"></i>
+
+<h5>Browse Treks</h5>
+
+<p>Explore exciting trekking destinations.</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card h-100 text-center p-4">
+
+<i class="fa-solid fa-calendar-check fa-2x text-success mb-3"></i>
+
+<h5>Easy Booking</h5>
+
+<p>Book your trek in seconds.</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card h-100 text-center p-4">
+
+<i class="fa-solid fa-user-tie fa-2x text-warning mb-3"></i>
+
+<h5>Staff Management</h5>
+
+<p>Assign and manage trekking staff.</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card h-100 text-center p-4">
+
+<i class="fa-solid fa-chart-line fa-2x text-danger mb-3"></i>
+
+<h5>Admin Dashboard</h5>
+
+<p>Monitor users, treks and bookings.</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="bg-dark text-center text-white py-3">
+
+© 2026 TrekManager | MAD-I Project
+
+</footer>
+
+</body>
+
+</html>
