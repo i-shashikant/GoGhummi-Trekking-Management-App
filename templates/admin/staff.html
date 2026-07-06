@@ -24,21 +24,21 @@
             <td>{{ s.username }}</td>
             <td>{{ s.email or '-' }}</td>
             <td>
-                {% if s.approval_status == 'pending' %}
+                {% if s.approval_status == 'Pending' %}
                     <span class="badge bg-warning text-dark">Pending</span>
-                {% elif s.approval_status == 'approved' %}
+                {% elif s.approval_status == 'Approved' %}
                     <span class="badge bg-success">Approved</span>
                 {% else %}
                     <span class="badge bg-dark">Blacklisted</span>
                 {% endif %}
             </td>
             <td>
-                {% if s.approval_status == 'pending' %}
+                {% if s.approval_status != 'Approved' %}
                     <form method="POST" action="{{ url_for('admin.approve_staff', user_id=s.id) }}" class="d-inline">
                         <button class="btn btn-sm btn-success"><i class="fa-solid fa-check"></i> Approve</button>
                     </form>
                 {% endif %}
-                {% if s.approval_status != 'blacklisted' %}
+                {% if s.approval_status != 'Blacklisted' %}
                     <form method="POST" action="{{ url_for('admin.blacklist_staff', user_id=s.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this staff member?');">
                         <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-ban"></i> Blacklist</button>
                     </form>
