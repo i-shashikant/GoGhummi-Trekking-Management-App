@@ -1,0 +1,48 @@
+.card-trek{
+    background:#171717;
+    border:1px solid #2f2f2f;
+    border-radius:18px;
+    transition:.25s;
+}
+
+
+.card-trek:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.table{
+    color:white;
+}
+
+.table-dark{
+    --bs-table-bg:#171717;
+    --bs-table-hover-bg:#232323;
+}
+
+.table td,
+.table th{
+    border-color:#333;
+}
+
+.table thead{
+    border-color:#444;
+}
+
+.card-trek table{
+    margin-bottom:0;
+}
+
+.list-group-item{
+    margin-bottom:8px;
+    border-radius:12px;
+}
+
+.list-group-item.active{
+    background:#0d6efd;
+    color:white;
+}
+
+.text-secondary{
+    color:#9ca3af !important;
+}

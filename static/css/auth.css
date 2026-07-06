@@ -1,0 +1,50 @@
+.auth-page{
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+        url("../images/login-bg.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+
+
+.auth-card{
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.auth-card label,
+.auth-card h3,
+.auth-card p,
+.auth-card small{
+    color:white;
+}
+
+.auth-card .form-control,
+.auth-card .form-select{
+    background:rgba(255,255,255,.12);
+    color:white;
+    border:1px solid rgba(255,255,255,.3);
+}
+
+.auth-card .form-control::placeholder{
+    color:#ddd;
+}
+
+.btn-trek{
+    background:#2E7D32;
+    color:white;
+    border:none;
+}
+
+.btn-trek:hover{
+    background:#256628;
+    color:white;
+}

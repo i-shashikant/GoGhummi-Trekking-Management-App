@@ -1,8 +1,8 @@
-*{margin:0px;}
+/* *{margin:0px;}
 
 
 .card-trek{
-    background:#171717;
+    background:#b8c5ae;
     border:1px solid #2f2f2f;
     border-radius:18px;
     transition:.25s;
@@ -78,10 +78,33 @@
     background-attachment:fixed;
 }
 
-.card-trek{
-    background: rgba(255,255,255,.92);
-    backdrop-filter: blur(8px);
+.auth-card{
+    background: rgba(255,255,255,.18);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border:1px solid rgba(255,255,255,.3);
+
     border-radius:20px;
+
     box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
+ */
 
+ *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+}
+
+.btn-sm{
+    border-radius:8px;
+}
+
+.badge{
+    padding:.55em .8em;
+}
