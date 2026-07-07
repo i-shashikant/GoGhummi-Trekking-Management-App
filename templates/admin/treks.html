@@ -9,21 +9,26 @@
     <a href="{{ url_for('admin.add_trek') }}" class="btn btn-success"><i class="fa-solid fa-plus"></i> Add Trek</a>
 </div>
 
-<div class="input-group">
+<form method="GET" class="mb-3 d-flex">
 
-    <input type="text"
-           class="form-control"
-           name="q"
-           placeholder="Search treks by name..."
-           value="{{ q }}">
+    <input
+        type="text"
+        name="q"
+        class="form-control me-2"
+        placeholder="Search..."
+        value="{{ q }}">
 
-    <button class="btn btn-primary">
-
+    <button class="btn btn-outline-secondary me-2" type="submit">
         <i class="fa-solid fa-search"></i>
-
     </button>
 
-</div>
+    {% if q %}
+    <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger">
+        Clear
+    </a>
+    {% endif %}
+
+</form>
 <br>
 <div class="card card-trek p-4">
 <div class="table-responsive">

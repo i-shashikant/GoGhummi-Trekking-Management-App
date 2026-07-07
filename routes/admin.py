@@ -52,11 +52,18 @@ def dashboard():
 def treks():
 
     q = request.args.get("q", "").strip()
-    query = Trek.query
+
+    treks = Trek.query   # <-- Create the base query first
 
     if q:
-        query = query.filter(Trek.trek_name.ilike(f"%{q}%"))
-    treks = query.order_by(Trek.start_date).all()
+        treks = treks.filter(
+            db.or_(
+                Trek.trek_name.ilike(f"%{q}%"),
+                Trek.location.ilike(f"%{q}%")
+            )
+        )
+
+    treks = treks.order_by(Trek.start_date).all()
     staff_list = User.query.filter_by(role="staff", approval_status="Approved").all()
     return render_template("admin/treks.html", treks=treks, staff_list=staff_list, q=q)
 
@@ -115,6 +122,8 @@ def edit_trek(trek_id):
 
         if assigned_staff:
             trek.assigned_staff_id = int(assigned_staff)
+        else:
+            trek.assigned_staff_id = None
 
         db.session.commit()
 
@@ -196,12 +205,22 @@ def staff():
 
     q = request.args.get("q", "").strip()
 
-    query = User.query.filter_by(role="staff")
+    staff_query = User.query.filter_by(role="staff")
 
     if q:
-        query = query.filter(User.username.ilike(f"%{q}%"))
+        if q.isdigit():
+            staff_query = staff_query.filter(
+                db.or_(
+                    User.id == int(q),
+                    User.username.ilike(f"%{q}%")
+                )
+            )
+        else:
+            staff_query = staff_query.filter(
+                User.username.ilike(f"%{q}%")
+            )
 
-    staff_list = query.order_by(User.username).all()
+    staff_list = staff_query.all()
 
     return render_template(
         "admin/staff.html",
@@ -268,12 +287,22 @@ def users():
 
     q = request.args.get("q", "").strip()
 
-    query = User.query.filter_by(role="user")
+    users_query = User.query.filter_by(role="user")
 
     if q:
-        query = query.filter(User.username.ilike(f"%{q}%"))
+        if q.isdigit():
+            users_query = users_query.filter(
+                db.or_(
+                    User.id == int(q),
+                    User.username.ilike(f"%{q}%")
+                )
+            )
+        else:
+            users_query = users_query.filter(
+                User.username.ilike(f"%{q}%")
+            )
 
-    users = query.order_by(User.username).all()
+    users = users_query.all()
 
     return render_template(
         "admin/users.html",

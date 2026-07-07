@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-3 mb-3">
             <label class="form-label">Available Slots</label>
-            <input type="number" name="available_slots" min="0" class="form-control" value="{{ trek.available_slots }}" required>
+            <input type="number" name="available_slots" min="0" class="form-control" value="{{ trek.available_slots }}" readonly>
         </div>
         <div class="col-md-3 mb-3">
             <label class="form-label">Max Slots</label>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label class="form-label">Assigned Staff</label>
-            <select name="staff_id" class="form-select">
+            <select name="assigned_staff_id" class="form-select">
                 <option value="">-- Unassigned --</option>
                 {% for s in staff_list %}
                 <option value="{{ s.id }}" {% if trek.assigned_staff_id == s.id %}selected{% endif %}>{{ s.username }}</option>

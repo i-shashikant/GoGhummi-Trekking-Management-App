@@ -8,8 +8,24 @@
 <h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Manage Trek Staff</h2>
 
 <form method="GET" class="mb-3 d-flex">
-    <input type="text" name="q" class="form-control me-2" placeholder="Search staff by name..." value="{{ q }}">
-    <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i></button>
+
+    <input
+        type="text"
+        name="q"
+        class="form-control me-2"
+        placeholder="Search..."
+        value="{{ q }}">
+
+    <button class="btn btn-outline-secondary me-2" type="submit">
+        <i class="fa-solid fa-search"></i>
+    </button>
+
+    {% if q %}
+    <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger">
+        Clear
+    </a>
+    {% endif %}
+
 </form>
 
 <div class="table-responsive">
