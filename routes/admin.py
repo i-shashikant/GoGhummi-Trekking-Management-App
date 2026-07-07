@@ -111,9 +111,10 @@ def edit_trek(trek_id):
 
         trek.status = request.form["status"]
 
-        trek.assigned_staff_id = (
-            request.form.get("assigned_staff_id") or None
-        )
+        assigned_staff = request.form.get("assigned_staff_id")
+
+        if assigned_staff:
+            trek.assigned_staff_id = int(assigned_staff)
 
         db.session.commit()
 
