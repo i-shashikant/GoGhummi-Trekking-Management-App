@@ -63,87 +63,66 @@
 </div>
 
 <!-- Today's Summary -->
+<div class="list-group">
 
-<div class="card card-trek p-4 mb-4">
+{% for trek in assigned_treks[:3] %}
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+<div class="list-group-item">
 
-        <h4>
+    <div class="d-flex justify-content-between align-items-start">
 
-            <i class="fa-solid fa-list-check"></i>
+        <div>
 
-            Today's Summary
+            <h6 class="mb-1">
+                {{ trek.trek_name }}
+            </h6>
 
-        </h4>
+            <small class="text-secondary">
+                <i class="fa-solid fa-location-dot"></i>
+                {{ trek.location }}
+            </small>
 
-        <a href="{{ url_for('staff.assigned_treks') }}"
-           class="btn btn-primary">
+            <div class="mt-2">
 
-            <i class="fa-solid fa-route"></i>
+                <small class="me-3">
+                    <i class="fa-solid fa-users text-primary"></i>
+                    <strong>{{ trek.bookings|length }}</strong> Registered
+                </small>
 
-            View Assigned Treks
+                <small class="me-3">
+                    <i class="fa-solid fa-user-group text-success"></i>
+                    Capacity:
+                    <strong>{{ trek.max_slots }}</strong>
+                </small>
 
-        </a>
-
-    </div>
-
-    {% if assigned_treks %}
-
-        <div class="list-group">
-
-        {% for trek in assigned_treks[:3] %}
-
-            <div class="list-group-item">
-
-                <div class="d-flex justify-content-between align-items-center">
-
-                    <div>
-
-                        <h6 class="mb-1">{{ trek.trek_name }}</h6>
-
-                        <small class="text-secondary">
-
-                            <i class="fa-solid fa-location-dot"></i>
-
-                            {{ trek.location }}
-
-                        </small>
-
-                    </div>
-
-                    <span class="badge
-                    {% if trek.status=='Open' %}
-                        bg-success
-                    {% elif trek.status=='Closed' %}
-                        bg-secondary
-                    {% else %}
-                        bg-warning text-dark
-                    {% endif %}
-                    ">
-
-                        {{ trek.status }}
-
-                    </span>
-
-                </div>
+                <small>
+                    <i class="fa-solid fa-chair text-warning"></i>
+                    Available:
+                    <strong>{{ trek.available_slots }}</strong>
+                </small>
 
             </div>
 
-        {% endfor %}
-
         </div>
 
-        
+        <span class="badge
+        {% if trek.status=='Open' %}
+            bg-success
+        {% elif trek.status=='Closed' %}
+            bg-secondary
+        {% else %}
+            bg-warning text-dark
+        {% endif %}">
 
-    {% else %}
+            {{ trek.status }}
 
-        <div class="alert alert-info mb-0">
+        </span>
 
-            No treks assigned yet.
+    </div>
 
-        </div>
+</div>
 
-    {% endif %}
+{% endfor %}
 
 </div>
 

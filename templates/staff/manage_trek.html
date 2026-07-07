@@ -72,38 +72,41 @@
     </h4>
 
     <form method="POST"
-          action="{{ url_for('staff.update_trek', trek_id=trek.id) }}">
+        action="{{ url_for('staff.update_trek', trek_id=trek.id) }}">
 
-        <div class="row align-items-end">
+        <div class="row g-3 align-items-end">
 
-            <div class="col-md-8">
-
+            <div class="col-md-4">
                 <label class="form-label">Status</label>
 
                 <select class="form-select" name="status">
-
-                    <option value="Open"
-                    {% if trek.status=="Open" %}selected{% endif %}>
+                    <option value="Open" {% if trek.status=="Open" %}selected{% endif %}>
                         Open
                     </option>
 
-                    <option value="Closed"
-                    {% if trek.status=="Closed" %}selected{% endif %}>
+                    <option value="Closed" {% if trek.status=="Closed" %}selected{% endif %}>
                         Closed
                     </option>
-
                 </select>
+            </div>
 
+            <div class="col-md-4">
+                <label class="form-label">Maximum Capacity</label>
+
+                <input
+                    type="number"
+                    class="form-control"
+                    name="max_slots"
+                    min="{{ trek.bookings|length }}"
+                    value="{{ trek.max_slots }}"
+                    required>
             </div>
 
             <div class="col-md-4">
 
                 <button class="btn btn-success w-100">
-
                     <i class="fa-solid fa-floppy-disk"></i>
-
-                    Update Status
-
+                    Update Trek
                 </button>
 
             </div>

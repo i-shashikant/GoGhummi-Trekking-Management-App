@@ -76,13 +76,24 @@ def update_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
 
-    if trek is None:
-        return "Trek not found", 404
+    new_capacity = int(request.form["max_slots"])
 
-    trek.status = request.form["status"]
+    booked = Booking.query.filter_by(
+        trek_id=trek.id
+    ).count()
+
+    if new_capacity < booked:
+        flash(
+            f"Capacity cannot be less than {booked} because users are already booked.",
+            "danger"
+        )
+        return redirect(url_for("staff.manage_trek", trek_id=trek.id))
+
+    trek.max_slots = new_capacity
+    trek.available_slots = new_capacity - booked
 
     db.session.commit()
-    flash("Trek status updated successfully.", "success")
+    flash("Trek details updated successfully.", "success")
     return redirect(url_for("staff.dashboard"))
 
 @staff_bp.route("/manage/<int:trek_id>")
