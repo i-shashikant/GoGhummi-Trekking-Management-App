@@ -15,7 +15,7 @@
 <div class="table-responsive">
 <table class="table table-hover align-middle bg-white">
     <thead>
-        <tr><th>Name</th><th>Username</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+        <tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
     </thead>
     <tbody>
     {% for s in staff_list %}
@@ -23,6 +23,7 @@
             <td>{{ s.username }}</td>
             <td>{{ s.username }}</td>
             <td>{{ s.email or '-' }}</td>
+            <td>{{ s.phone }}</td>
             <td>
                 {% if s.approval_status == 'Pending' %}
                     <span class="badge bg-warning text-dark">Pending</span>

@@ -22,6 +22,7 @@
             
             <td>{{ u.username }}</td>
             <td>{{ u.email or '-' }}</td>
+            <td>{{ u.phone }}</td>
             <td>
                 {% if u.approval_status == "Approved" %}
                     <span class="badge bg-success">Active</span>

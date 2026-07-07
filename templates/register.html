@@ -33,17 +33,27 @@
 
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" required autofocus>
+                            <input type="text" name="username" class="form-control"  placeholder="Tell us what to call you..." required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" required>
+                            <input type="email" name="email" class="form-control"  placeholder="abc@gmail.com" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text"
+                                name="phone"
+                                class="form-control"
+                                pattern="[0-9]{10}"
+                                maxlength="10"
+                                placeholder="9876543210"
+                                required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
+                            <input type="password" name="password" class="form-control"  placeholder="********" required>
                         </div>
 
                         <div class="mb-3">

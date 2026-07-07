@@ -74,6 +74,7 @@ def register():
         email = request.form.get("email")
         password=generate_password_hash(request.form["password"])
         role = request.form.get("role")
+        phone = request.form.get("phone")
 
         existing_user = User.query.filter_by(username=username).first()
         existing_email = User.query.filter_by(email=email).first()
@@ -85,13 +86,18 @@ def register():
         if existing_email:
             flash("Email already exists.", "danger")
             return redirect(url_for("auth.register"))
+        existing_phone = User.query.filter_by(phone=phone).first()
+
+        if existing_phone:
+            flash("Phone number already exists.", "danger")
+            return redirect(url_for("auth.register"))
 
         if role == "staff":
             approval_status = "Pending"
         else:
             approval_status = "Approved"
 
-        new_user = User(username=username, email=email, password=password, role=role, approval_status=approval_status)
+        new_user = User(username=username, email=email, phone=phone, password=password, role=role, approval_status=approval_status)
         db.session.add(new_user)
         db.session.commit()
 
