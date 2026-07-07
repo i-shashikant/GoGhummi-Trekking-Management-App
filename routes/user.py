@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, session, redirect, url_for, request, flash
+from flask import Blueprint, render_template, session, redirect, url_for, request, flash, render_template, session
 from models.trek import Trek
 from models.booking import Booking
 from models.user import User
 from datetime import date
 from config import db
 from utils.auth import user_required
+from werkzeug.security import generate_password_hash
 
 
 user_bp = Blueprint("user", __name__, url_prefix="/user")
@@ -38,11 +39,49 @@ def dashboard():
         my_bookings=my_bookings
     )
 
-@user_bp.route("/profile")
+@user_bp.route("/profile", methods=["GET", "POST"])
 @user_required
 def profile():
 
     user = db.session.get(User, session["user_id"])
+
+    if request.method == "POST":
+
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        new_password = request.form.get("new_password")
+
+        # Check email uniqueness (excluding current user)
+        existing_email = User.query.filter(
+            User.email == email,
+            User.id != user.id
+        ).first()
+
+        if existing_email:
+            flash("Email already exists.", "danger")
+            return redirect(url_for("user.profile"))
+
+        # Check phone uniqueness (excluding current user)
+        existing_phone = User.query.filter(
+            User.phone == phone,
+            User.id != user.id
+        ).first()
+
+        if existing_phone:
+            flash("Phone number already exists.", "danger")
+            return redirect(url_for("user.profile"))
+
+        user.email = email
+        user.phone = phone
+
+        if new_password:
+            user.password = generate_password_hash(new_password)
+
+        db.session.commit()
+
+        flash("Profile updated successfully.", "success")
+
+        return redirect(url_for("user.profile"))
 
     total_bookings = Booking.query.filter_by(
         user_id=user.id
@@ -53,9 +92,6 @@ def profile():
         user=user,
         total_bookings=total_bookings
     )
-
-
-
 
 @user_bp.route("/treks")
 @user_required
