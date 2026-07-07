@@ -31,7 +31,7 @@
     <thead >
         <tr>
             <th>Name</th><th>Location</th><th>Difficulty</th><th>Slots</th>
-            <th>Staff</th><th>Status</th><th>Actions</th> 
+            <th>Staff</th><th>Status</th><th>Price</th><th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -81,6 +81,7 @@
 
                 {% endif %}</td>
             <td><span class="badge {% if t.status == 'Open' %}bg-success{% elif t.status == 'Closed' %}bg-secondary{% else %}bg-warning text-dark{% endif %}">{{ t.status }}</span></td>
+            <td>₹ {{ t.price }}</td>
 
 
             <td>

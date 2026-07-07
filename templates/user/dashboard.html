@@ -19,6 +19,9 @@
             <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ t.location }}</p>
             <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
             <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
+            <h5 class="text-success fw-bold">
+                ₹ {{ t.price }}
+            </h5>
             <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-trek btn-sm mt-2">View Details</a>
         </div>
     </div>

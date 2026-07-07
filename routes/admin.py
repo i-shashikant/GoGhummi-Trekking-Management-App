@@ -93,8 +93,7 @@ def edit_trek(trek_id):
         ).date()
 
         trek.duration = int(request.form["duration"])
-
-        new_max_slots = int(request.form["max_slots"])
+        trek.price = int(request.form["price"])
 
         new_max_slots = int(request.form["max_slots"])
 
@@ -124,7 +123,7 @@ def edit_trek(trek_id):
     return render_template(
         "admin/edit_trek.html",
         trek=trek,
-        staff_list=staff_list
+        staff_list=staff_list,
     )
 
 @admin_bp.route("/treks/add", methods=["GET", "POST"])
@@ -153,6 +152,7 @@ def add_trek():
                 "%Y-%m-%d"
             ).date(),
             duration=int(request.form["duration"]),
+            price=int(request.form.get("price")),
             max_slots=max_slots,
             available_slots=max_slots,
             description=request.form["description"],

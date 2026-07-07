@@ -16,9 +16,19 @@
     <span class="badge badge-difficulty-{{ trek.difficulty }} mb-2" style="width:fit-content;">{{ trek.difficulty }}</span>
     <p><i class="fa-solid fa-calendar"></i> {{ trek.start_date.strftime('%d %b') }} - {{ trek.end_date.strftime('%d %b %Y') }} ({{ trek.duration }} days)</p>
     <p><i class="fa-solid fa-chair"></i> Slots available: {{ trek.available_slots }} / {{ trek.max_slots }}</p>
+    
     <p>{{ trek.description or 'No description provided.' }}</p>
     {% if trek.assigned_staff %}
     <p><i class="fa-solid fa-id-badge"></i> Trek Guide: {{ trek.assigned_staff.username }}</p>
+    <div class="alert alert-success">
+
+    <h4>
+
+        ₹ {{ trek.price }}
+
+    </h4>
+
+    </div>
     {% endif %}
 
     {% if already_booked %}

@@ -35,6 +35,7 @@
             <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
             <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ t.start_date.strftime('%d %b') }} - {{ t.end_date.strftime('%d %b %Y') }}</p>
             <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
+            <p class="text-success fw-bold">₹ {{ t.price }}</p>
             <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-trek btn-sm mt-auto">View Details</a>
         </div>
     </div>

@@ -9,7 +9,7 @@
 <div class="table-responsive">
 <table class="table table-hover align-middle bg-white">
     <thead>
-        <tr><th>Booking ID</th><th>Trek</th><th>Location</th><th>Status</th><th>Booked On</th><th>Action</th></tr>
+        <tr><th>Booking ID</th><th>Trek</th><th>Location</th><th>Status</th><th>Booked On</th><th>Price</th><th>Action</th></tr>
     </thead>
     <tbody>
     {% for b in bookings %}
@@ -23,6 +23,7 @@
                 </span>
             </td>
             <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
+            <td>₹ {{ b.trek.price }}</td>
             <td>
                 {% if b.status == 'Booked' %}
                 <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
