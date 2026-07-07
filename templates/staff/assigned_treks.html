@@ -44,22 +44,21 @@ Assigned Treks | GoGhummi
         <td>{{ trek.available_slots }}</td>
 
         <td>
+        <div class="d-flex gap-2">
 
-            <a class="btn btn-primary btn-sm"
-               href="{{ url_for('staff.participants', trek_id=trek.id) }}">
-
-                View Participants
-
+            <a class="btn btn-info btn-sm"
+            href="{{ url_for('staff.participants', trek_id=trek.id) }}">
+                <i class="fa-solid fa-users"></i>
+                Participants
             </a>
-        </td>
-        <td>  
-            <a class="btn btn-primary btn-sm"
-               href="{{ url_for('staff.participants', trek_id=trek.id) }}">
 
-                Edit Trek
+            <a class="btn btn-warning btn-sm"
+            href="{{ url_for('staff.manage_trek', trek_id=trek.id) }}">
+                <i class="fa-solid fa-gear"></i>
+                Manage
             </a>
-        </td>
 
+        </div>
         </td>
 
     </tr>

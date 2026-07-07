@@ -20,25 +20,27 @@
                 <th>User ID</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Booking Date</th>
+                <th>Status</th>
             </tr>
         </thead>
 
         <tbody>
 
-        {% for user in participants %}
-
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-            </tr>
-
-        {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.user.id }}</td>
+            <td>{{ booking.user.username }}</td>
+            <td>{{ booking.user.email }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center">
+                No participants yet.
+            </td>
+        </tr>
+{% endfor %}
 
 {% endblock %}
