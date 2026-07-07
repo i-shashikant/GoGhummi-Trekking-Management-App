@@ -5,6 +5,7 @@ from models.user import User
 from models.booking import Booking
 from datetime import datetime
 from utils.auth import admin_required
+from datetime import date
 
 
 
@@ -134,6 +135,7 @@ def edit_trek(trek_id):
         "admin/edit_trek.html",
         trek=trek,
         staff_list=staff_list,
+        today=date.today().isoformat()
     )
 
 @admin_bp.route("/treks/add", methods=["GET", "POST"])
@@ -178,7 +180,8 @@ def add_trek():
 
     return render_template(
         "admin/add_trek.html",
-        staff_list=approved_staff
+        staff_list=approved_staff,
+        today=date.today().isoformat()
     )
 
 @admin_bp.route("/treks/delete/<int:trek_id>", methods=["POST"])
