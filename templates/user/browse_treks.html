@@ -28,15 +28,15 @@
 
 <div class="row g-4">
     {% for t in treks %}
-    <div class="col-md-4">
-        <div class="card card-trek p-3 h-100">
+    <div class="col-md-4" >
+        <div class="card card-trek p-3 h-100 {% if t.status != 'Open' %} opacity-75 {% endif %}">
             <h5>{{ t.trek_name }}</h5>
             <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ t.location }}</p>
             <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
             <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ t.start_date.strftime('%d %b') }} - {{ t.end_date.strftime('%d %b %Y') }}</p>
             <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
             <p class="text-success fw-bold">₹ {{ t.price }}</p>
-            <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-trek btn-sm mt-auto">View Details</a>
+            <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-trek btn-secondary mt-auto">View Details</a>
         </div>
     </div>
     {% else %}

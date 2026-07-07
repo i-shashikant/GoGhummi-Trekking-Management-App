@@ -118,9 +118,7 @@ def browse_treks():
             Trek.location.ilike(f"%{location}%")
         )
 
-    treks = query.order_by(
-        Trek.start_date
-    ).all()
+    treks = Trek.query.order_by(Trek.start_date).all()
 
     return render_template(
         "user/browse_treks.html",
