@@ -1,31 +1,148 @@
 {% extends "layouts/dashboard.html" %}
-
 {% import "staff/_nav.html" as nav %}
+
 {% block title %}Staff Dashboard | GoGhummi{% endblock %}
-{% block sidebar %}{{ nav.staff_sidebar() }}{% endblock %}
+
+{% block sidebar %}
+{{ nav.staff_sidebar() }}
+{% endblock %}
+
 {% block content %}
 
-<h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Welcome, {{ user.username }}</h2>
+<h2 class="mb-4">
+    <i class="fa-solid fa-handshake"></i>
+    Welcome, {{ user.username }}
+</h2>
 
-{% if trek_stats|length == 0 %}
-    <div class="alert alert-info">You have not been assigned any treks yet. Please check back later.</div>
-{% else %}
-<div class="row g-4">
-    {% for item in trek_stats %}
-    <div class="col-md-6">
-        <div class="card card-trek p-3">
-            <div class="d-flex justify-content-between align-items-start">
-                <h5>{{ item.trek.trek_name }}</h5>
-                <span class="badge badge-status-{{ item.trek.status }}">{{ item.trek.status }}</span>
-            </div>
-            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ item.trek.location }}</p>
-            <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ item.trek.start_date.strftime('%d %b') }} - {{ item.trek.end_date.strftime('%d %b %Y') }}</p>
-            <p class="mb-1"><i class="fa-solid fa-chair"></i> Slots: {{ item.trek.available_slots }} / {{ item.trek.max_slots }}</p>
-            <p class="mb-2"><i class="fa-solid fa-users"></i> Registered Trekkers: {{ item.booked_count }}</p>
-            <a href="{{ url_for('staff.assigned_treks', trek_id=item.trek.id) }}" class="btn btn-trek btn-sm">Manage Trek</a>
+<!-- Stats -->
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card card-trek p-4 text-center">
+
+            <i class="fa-solid fa-route fa-2x mb-2 text-primary"></i>
+
+            <h5>Assigned Treks</h5>
+
+            <h2>{{ assigned_count }}</h2>
+
         </div>
+
     </div>
-    {% endfor %}
+
+    <div class="col-md-4">
+
+        <div class="card card-trek p-4 text-center">
+
+            <i class="fa-solid fa-mountain-sun fa-2x mb-2 text-success"></i>
+
+            <h5>Open Treks</h5>
+
+            <h2>{{ open_count }}</h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-trek p-4 text-center">
+
+            <i class="fa-solid fa-users fa-2x mb-2 text-warning"></i>
+
+            <h5>Total Bookings</h5>
+
+            <h2>{{ booking_count }}</h2>
+
+        </div>
+
+    </div>
+
 </div>
-{% endif %}
+
+<!-- Today's Summary -->
+
+<div class="card card-trek p-4 mb-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>
+
+            <i class="fa-solid fa-list-check"></i>
+
+            Today's Summary
+
+        </h4>
+
+        <a href="{{ url_for('staff.assigned_treks') }}"
+           class="btn btn-primary">
+
+            <i class="fa-solid fa-route"></i>
+
+            View Assigned Treks
+
+        </a>
+
+    </div>
+
+    {% if assigned_treks %}
+
+        <div class="list-group">
+
+        {% for trek in assigned_treks[:3] %}
+
+            <div class="list-group-item">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h6 class="mb-1">{{ trek.trek_name }}</h6>
+
+                        <small class="text-secondary">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            {{ trek.location }}
+
+                        </small>
+
+                    </div>
+
+                    <span class="badge
+                    {% if trek.status=='Open' %}
+                        bg-success
+                    {% elif trek.status=='Closed' %}
+                        bg-secondary
+                    {% else %}
+                        bg-warning text-dark
+                    {% endif %}
+                    ">
+
+                        {{ trek.status }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info mb-0">
+
+            No treks assigned yet.
+
+        </div>
+
+    {% endif %}
+
+</div>
+
 {% endblock %}

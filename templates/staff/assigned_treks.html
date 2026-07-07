@@ -25,7 +25,7 @@ Assigned Treks | GoGhummi
             <th>Location</th>
             <th>Status</th>
             <th>Available Slots</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
 
@@ -48,9 +48,17 @@ Assigned Treks | GoGhummi
             <a class="btn btn-primary btn-sm"
                href="{{ url_for('staff.participants', trek_id=trek.id) }}">
 
-                Manage
+                View Participants
 
             </a>
+        </td>
+        <td>  
+            <a class="btn btn-primary btn-sm"
+               href="{{ url_for('staff.participants', trek_id=trek.id) }}">
+
+                Edit Trek
+            </a>
+        </td>
 
         </td>
 
