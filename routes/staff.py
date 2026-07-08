@@ -88,11 +88,13 @@ def update_trek(trek_id):
             "danger"
         )
         return redirect(url_for("staff.manage_trek", trek_id=trek.id))
-
+    
+    trek.status = request.form["status"]
     trek.max_slots = new_capacity
     trek.available_slots = new_capacity - booked
 
     db.session.commit()
+    
     flash("Trek details updated successfully.", "success")
     return redirect(url_for("staff.dashboard"))
 

@@ -33,7 +33,7 @@
             <td>₹ {{ booking.trek.price }}</td>
             <td>
                 {% if booking.status == 'Booked' %}
-                <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
+                <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" onsubmit="return confirm('Cancel this booking?');">
                     <button class="btn btn-sm btn-outline-danger">Cancel</button>
                 </form>
                 {% endif %}

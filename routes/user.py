@@ -97,7 +97,7 @@ def browse_treks():
     difficulty = request.args.get("difficulty", "")
     location = request.args.get("location", "").strip()
 
-    query = Trek.query.filter_by(status="Open")
+    query = Trek.query
 
     if q:
         query = query.filter(
@@ -114,7 +114,7 @@ def browse_treks():
             Trek.location.ilike(f"%{location}%")
         )
 
-    treks = Trek.query.order_by(Trek.start_date).all()
+    treks = query.order_by(Trek.start_date).all()
 
     return render_template(
         "user/browse_treks.html",

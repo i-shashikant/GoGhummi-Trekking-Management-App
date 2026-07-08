@@ -24,10 +24,15 @@
         <input type="text" name="location" class="form-control" placeholder="Location" value="{{ location }}">
     </div>
 
-    <div class="col-md-2">
-        <button class="btn btn-success w-100" type="submit">Filter</button>
+    <div class="col-md-2 d-flex gap-2">
+        <button class="btn btn-success flex-fill" type="submit">
+            <i class="fa-solid fa-filter"></i>
+        </button>
+        <a href="{{ url_for('user.browse_treks') }}" class="btn btn-outline-danger flex-fill">
+            <i class="fa-solid fa-xmark"></i>
+        </a>
     </div>
-
+    
 </form>
 
 <div class="row g-4">
