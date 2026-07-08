@@ -16,27 +16,11 @@ admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 def dashboard():
 
     total_treks = Trek.query.count()
-
     total_users = User.query.filter_by(role="user").count()
-
-    total_staff = User.query.filter_by(
-        role="staff",
-        approval_status="Approved"
-    ).count()
-
-    pending_staff = User.query.filter_by(
-        role="staff",
-        approval_status="Pending"
-    ).count()
-
+    total_staff = User.query.filter_by(role="staff", approval_status="Approved").count()
+    pending_staff = User.query.filter_by(role="staff", approval_status="Pending").count()
     total_bookings = Booking.query.count()
-
-    recent_bookings = (
-        Booking.query
-        .order_by(Booking.id.desc())
-        .limit(5)
-        .all()
-    )
+    recent_bookings = ( Booking.query .order_by(Booking.id.desc()) .limit(5) .all())
 
     return render_template(
         "admin/dashboard.html",
@@ -53,9 +37,7 @@ def dashboard():
 def treks():
 
     q = request.args.get("q", "").strip()
-
-    treks = Trek.query   # <-- Create the base query first
-
+    treks = Trek.query  
     if q:
         treks = treks.filter(
             db.or_(
@@ -63,7 +45,6 @@ def treks():
                 Trek.location.ilike(f"%{q}%")
             )
         )
-
     treks = treks.order_by(Trek.start_date).all()
     staff_list = User.query.filter_by(role="staff", approval_status="Approved").all()
     return render_template("admin/treks.html", treks=treks, staff_list=staff_list, q=q)
@@ -73,59 +54,39 @@ def treks():
 def edit_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
-
     if trek is None:
         return "Trek not found", 404
-
-    staff_list = User.query.filter_by(
-        role="staff",
-        approval_status="Approved"
-    ).all()
+    staff_list = User.query.filter_by(role="staff", approval_status="Approved").all()
     old_max_slots = trek.max_slots
     old_available_slots = trek.available_slots
     booked_slots = old_max_slots - old_available_slots
 
     if request.method == "POST":
-
         trek.trek_name = request.form["trek_name"]
         trek.location = request.form["location"]
         trek.difficulty = request.form["difficulty"]
-        trek.start_date = datetime.strptime(
-            request.form["start_date"],
-            "%Y-%m-%d"
-        ).date()
+        trek.start_date = datetime.strptime(request.form["start_date"],"%Y-%m-%d").date()
 
-        trek.end_date = datetime.strptime(
-            request.form["end_date"],
-            "%Y-%m-%d"
-        ).date()
-
+        trek.end_date = datetime.strptime(request.form["end_date"],"%Y-%m-%d").date()
         trek.duration = int(request.form["duration"])
         trek.price = int(request.form["price"])
-
         new_max_slots = int(request.form["max_slots"])
 
         if new_max_slots < booked_slots:
-            flash(
-                f"Cannot reduce maximum slots below the number of booked participants ({booked_slots}).",
-                "danger"
-            )
+            flash(f"Cannot reduce maximum slots below the number of booked participants ({booked_slots}).", "danger")
             return redirect(
                 url_for("admin.edit_trek", trek_id=trek.id)
             )
+        
         trek.max_slots = new_max_slots
         trek.available_slots = new_max_slots - booked_slots
         trek.description = request.form["description"]
-
         trek.status = request.form["status"]
-
         assigned_staff = request.form.get("assigned_staff_id")
-
         if assigned_staff:
             trek.assigned_staff_id = int(assigned_staff)
         else:
             trek.assigned_staff_id = None
-
         db.session.commit()
         flash("Trek updated successfully.", "success")
         return redirect(url_for("admin.treks"))
@@ -141,27 +102,16 @@ def edit_trek(trek_id):
 @admin_required
 def add_trek():
 
-    approved_staff = User.query.filter_by(
-        role="staff",
-        approval_status="Approved"
-    ).all()
-
+    approved_staff = User.query.filter_by(role="staff",approval_status="Approved").all()
     if request.method == "POST":
 
         max_slots = int(request.form["max_slots"])
-
         new_trek = Trek(
             trek_name=request.form["trek_name"],
             location=request.form["location"],
             difficulty=request.form["difficulty"],
-            start_date=datetime.strptime(
-                request.form["start_date"],
-                "%Y-%m-%d"
-            ).date(),
-            end_date=datetime.strptime(
-                request.form["end_date"],
-                "%Y-%m-%d"
-            ).date(),
+            start_date=datetime.strptime(request.form["start_date"],"%Y-%m-%d").date(),
+            end_date=datetime.strptime(request.form["end_date"],"%Y-%m-%d").date(),
             duration=int(request.form["duration"]),
             price=int(request.form.get("price")),
             max_slots=max_slots,
@@ -187,11 +137,9 @@ def add_trek():
 def delete_trek(trek_id):
 
     trek = db.session.get(Trek, trek_id)
-
     if trek is None:
         return "Trek not found", 404
 
-    # Prevent deleting a trek that has bookings
     if trek.bookings:
         return "Cannot delete a trek that has bookings."
 

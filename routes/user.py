@@ -15,7 +15,6 @@ user_bp = Blueprint("user", __name__, url_prefix="/user")
 def dashboard():
 
     user = db.session.get(User, session["user_id"])
-
     open_treks = (
         Trek.query
         .filter_by(status="Open")
@@ -51,17 +50,14 @@ def profile():
         phone = request.form.get("phone")
         new_password = request.form.get("new_password")
 
-        # Check email uniqueness (excluding current user)
         existing_email = User.query.filter(
             User.email == email,
             User.id != user.id
         ).first()
-
         if existing_email:
             flash("Email already exists.", "danger")
             return redirect(url_for("user.profile"))
 
-        # Check phone uniqueness (excluding current user)
         existing_phone = User.query.filter(
             User.phone == phone,
             User.id != user.id

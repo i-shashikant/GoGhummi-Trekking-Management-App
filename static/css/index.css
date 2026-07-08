@@ -1,23 +1,50 @@
 body{
-    background:#0f172a;
-    color:white;
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("../images/home-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+}
+
+.features{
+    background: transparent;
 }
 
 .hero{
+    min-height:50vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     padding:120px 20px;
-    background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+    background:transparent;
 }
 
 .card{
     border:none;
-    border-radius:18px;
-    transition:.25s;
+    border-radius:20px;
+    transition:.3s;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
 .card:hover{
     transform:translateY(-8px);
 }
 
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.navbar {
+    background: rgba(0,0,0,.45) !important;
+    backdrop-filter: blur(10px);
+}
+
 footer{
-    margin-top:40px;
+    margin-top:60px;
+    background:rgba(0,0,0,.45)!important;
+    backdrop-filter:blur(10px);
 }
