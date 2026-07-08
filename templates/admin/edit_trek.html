@@ -65,7 +65,7 @@
         <div class="col-md-6 mb-3">
             <label class="form-label">Status</label>
             <select name="status" class="form-select">
-                {% for s in ['Pending','Approved','Open','Closed','Completed'] %}
+                {% for s in ['Open','Closed','Completed'] %}
                 <option {% if trek.status == s %}selected{% endif %}>{{ s }}</option>
                 {% endfor %}
             </select>

@@ -5,31 +5,25 @@
     <meta charset="UTF-8">
 
     <title>
-        {% block title %}
-        GoGhummi
-        {% endblock %}
+        {% block title %} GoGhummi {% endblock %}
     </title>
-    <link rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='images/small-logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/small-logo.png') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block styles %}{% endblock %}
 
 </head>
-
 <body>
 
 
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% block content %}
 {% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 

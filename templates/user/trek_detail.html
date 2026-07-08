@@ -6,155 +6,83 @@
 
 
 <a href="{{ url_for('user.browse_treks') }}" class="btn btn-link mb-3">
-    <i class="fa-solid fa-arrow-left"></i>
-    Back to Treks
+    <i class="fa-solid fa-arrow-left"></i> Back to Treks
 </a>
 
 <div class="row justify-content-center">
-
     <div class="col-lg-8 col-xl-7">
-
         <div class="card card-trek p-4">
 
             <div class="text-center mb-4">
-
-                <h2 class="fw-bold mb-2">
-                    {{ trek.trek_name }}
-                </h2>
-
-                <span class="badge badge-status-{{ trek.status }} fs-6">
-                    {{ trek.status }}
-                </span>
-
+                <h2 class="fw-bold mb-2"> {{ trek.trek_name }} </h2>
+                <span class="badge badge-status-{{ trek.status }} fs-6"> {{ trek.status }} </span>
             </div>
 
             <hr>
 
             <div class="row gy-3">
-
                 <div class="col-md-6">
                     <i class="fa-solid fa-location-dot text-danger"></i>
-                    <strong> Location</strong><br>
-                    {{ trek.location }}
+                    <strong> Location</strong><br> {{ trek.location }}
                 </div>
 
                 <div class="col-md-6">
                     <i class="fa-solid fa-mountain"></i>
                     <strong> Difficulty</strong><br>
-
-                     <span class="badge
-                        {% if trek.difficulty == 'Easy' %}
-                            text-success
-                        {% elif trek.difficulty == 'Moderate' %}
-                            text-warning
-                        {% else %}
-                            text-danger
-                        {% endif %}">
-                        {{ trek.difficulty }}
-                    </span>
-
+                    <span class="badge {% if trek.difficulty == 'Easy' %} text-success {% elif trek.difficulty == 'Moderate' %} text-warning {% else %} text-danger {% endif %}"> {{ trek.difficulty }} </span>
                 </div>
 
                 <div class="col-md-6">
                     <i class="fa-solid fa-calendar"></i>
                     <strong> Duration</strong><br>
-
-                    {{ trek.start_date.strftime('%d %b') }}
-                    -
-                    {{ trek.end_date.strftime('%d %b %Y') }}
-
+                    {{ trek.start_date.strftime('%d %b') }} - {{ trek.end_date.strftime('%d %b %Y') }}
                     ({{ trek.duration }} days)
                 </div>
 
                 <div class="col-md-6">
                     <i class="fa-solid fa-chair"></i>
-                    <strong> Slots</strong><br>
-
-                    {{ trek.available_slots }}
-                    /
-                    {{ trek.max_slots }}
-
+                    <strong> Slots</strong><br> {{ trek.available_slots }} / {{ trek.max_slots }}
                 </div>
 
                 {% if trek.assigned_staff %}
                 <div class="col-md-12">
-
                     <i class="fa-solid fa-id-badge"></i>
-
-                    <strong> Trek Guide</strong><br>
-
-                    {{ trek.assigned_staff.username }}
-
+                    <strong> Trek Guide</strong><br> {{ trek.assigned_staff.username }}
                 </div>
                 {% endif %}
-
             </div>
 
             <hr>
 
-            <p class="mb-4">
-                {{ trek.description or "No description available." }}
-            </p>
+            <p class="mb-4"> {{ trek.description or "No description available." }} </p>
 
             <div class="text-center my-4">
-
-                <h1 class="text-success fw-bold">
-
-                    ₹ {{ trek.price }}
-
-                </h1>
-
-                <small class="text-secondary">
-                    Per Person
-                </small>
-
+                <h1 class="text-success fw-bold"> ₹ {{ trek.price }} </h1>
+                <small class="text-secondary"> Per Person </small>
             </div>
 
             <div class="text-center">
-
                 {% if trek.status == "Open" and trek.available_slots > 0 %}
-
-                <form method="POST"
-                      action="{{ url_for('user.book_trek', trek_id=trek.id) }}">
-
+                <form method="POST" action="{{ url_for('user.book_trek', trek_id=trek.id) }}">
                     <button class="btn btn-success btn-lg px-5">
-
-                        <i class="fa-solid fa-ticket"></i>
-
-                        Book Now
-
+                        <i class="fa-solid fa-ticket"></i> Book Now
                     </button>
-
                 </form>
 
                 {% elif trek.status == "Closed" %}
-
                 <button class="btn btn-secondary btn-lg px-5" disabled>
-
-                    <i class="fa-solid fa-lock"></i>
-
-                    Booking Closed
-
+                    <i class="fa-solid fa-lock"></i> Booking Closed
                 </button>
-
                 {% else %}
 
                 <button class="btn btn-warning btn-lg px-5" disabled>
-
-                    <i class="fa-solid fa-flag-checkered"></i>
-
-                    Trek Completed
-
+                    <i class="fa-solid fa-flag-checkered"></i> Trek Completed
                 </button>
-
                 {% endif %}
 
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

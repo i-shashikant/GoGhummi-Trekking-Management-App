@@ -48,3 +48,8 @@
     background:#256628;
     color:white;
 }
+
+.form-select option {
+    color: #000;
+    background-color: #fff;
+}

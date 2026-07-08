@@ -1,16 +1,10 @@
 {% extends "layouts/dashboard.html" %}
 {% import "staff/_nav.html" as nav %}
-
 {% block title %}Manage Trek | GoGhummi{% endblock %}
-
-{% block sidebar %}
-{{ nav.staff_sidebar() }}
-{% endblock %}
-
+{% block sidebar %} {{ nav.staff_sidebar() }} {% endblock %}
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-
     <div>
         <h2><i class="fa-solid fa-mountain"></i> {{ trek.trek_name }}</h2>
         <p class="text-muted mb-0">{{ trek.location }}</p>
@@ -21,10 +15,9 @@
         <i class="fa-solid fa-arrow-left"></i>
         Back
     </a>
-
 </div>
 
-<!-- Trek Information -->
+
 
 <div class="row mb-4">
 
@@ -32,15 +25,7 @@
         <div class="card card-trek p-3">
             <h6>Current Status</h6>
 
-            <span class="badge
-            {% if trek.status=='Open' %}
-                bg-success
-            {% elif trek.status=='Closed' %}
-                bg-secondary
-            {% else %}
-                bg-warning text-dark
-            {% endif %}
-            ">
+            <span class="badge,{% if trek.status=='Open' %} bg-success {% elif trek.status=='Closed' %} bg-secondary {% else %} bg-warning text-dark {% endif %}">
                 {{ trek.status }}
             </span>
         </div>
@@ -62,8 +47,6 @@
 
 </div>
 
-<!-- Update Status -->
-
 <div class="card card-trek p-4 mb-4">
 
     <h4 class="mb-3">
@@ -75,118 +58,63 @@
         action="{{ url_for('staff.update_trek', trek_id=trek.id) }}">
 
         <div class="row g-3 align-items-end">
-
             <div class="col-md-4">
                 <label class="form-label">Status</label>
-
                 <select class="form-select" name="status">
-                    <option value="Open" {% if trek.status=="Open" %}selected{% endif %}>
-                        Open
-                    </option>
-
-                    <option value="Closed" {% if trek.status=="Closed" %}selected{% endif %}>
-                        Closed
-                    </option>
+                    <option value="Open" {% if trek.status=="Open" %}selected{% endif %}> Open </option>
+                    <option value="Closed" {% if trek.status=="Closed" %}selected{% endif %}> Closed </option>
                 </select>
             </div>
 
             <div class="col-md-4">
                 <label class="form-label">Maximum Capacity</label>
-
-                <input
-                    type="number"
-                    class="form-control"
-                    name="max_slots"
-                    min="{{ trek.bookings|length }}"
-                    value="{{ trek.max_slots }}"
-                    required>
+                <input type="number" class="form-control" name="max_slots" min="{{ trek.bookings|length }}" value="{{ trek.max_slots }}" required>
             </div>
 
             <div class="col-md-4">
-
                 <button class="btn btn-success w-100">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Update Trek
                 </button>
-
             </div>
 
         </div>
-
     </form>
-
 </div>
-
-<!-- Booked Users -->
 
 <h4 class="mb-3">
     <i class="fa-solid fa-users"></i>
     Registered Trekkers
 </h4>
+
 <div class="table-container">
-
-
     <div class="table-responsive">
-
         <table class="table table-hover align-middle mb-0">
-
             <thead class="table">
-
                 <tr>
-
                     <th>Name</th>
                     <th>Email</th>
                     <th>Booking Date</th>
                     <th>Status</th>
-
                 </tr>
-
             </thead>
 
             <tbody>
-
             {% for booking in bookings %}
-
                 <tr>
-
                     <td>{{ booking.user.username }}</td>
-
                     <td>{{ booking.user.email }}</td>
-
                     <td>{{ booking.booking_date }}</td>
-
-                    <td>
-
-                        <span class="badge bg-success">
-
-                            {{ booking.status }}
-
-                        </span>
-
-                    </td>
-
+                    <td><span class="badge bg-success"> {{ booking.status }} </span> </td>
                 </tr>
-
             {% else %}
-
                 <tr>
-
-                    <td colspan="4" class="text-center text-muted">
-
-                        No trekkers have booked this trek yet.
-
-                    </td>
-
+                    <td colspan="4" class="text-center text-muted"> No trekkers have booked this trek yet. </td>
                 </tr>
-
             {% endfor %}
 
             </tbody>
-
         </table>
-
     </div>
-
 </div>
-
 {% endblock %}

@@ -8,24 +8,22 @@
 
 <div class="auth-page">
     <div class="container min-vh-100 d-flex align-items-center">
-
         <div class="row w-100 align-items-center">
 
-            <!-- Left Branding -->
             <div class="col-lg-6 text-center text-white mb-5 mb-lg-0">
-                <i class="fa-solid fa-mountain fa-5x mb-4 text-success"></i>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GoGhummi Logo" class="img-fluid mb-4" style="max-width:220px;">
                 <h1 class="fw-bold display-4">GoGhummi</h1>
                 <p class="lead">Discover Trails. Book Adventures.</p>
             </div>
 
-            <!-- Login Card -->
-            <div class="col-lg-6 d-flex justify-content-center">
 
+            <div class="col-lg-6 d-flex justify-content-center">
                 <div class="card auth-card shadow-lg border-0 rounded-4 p-4" style="max-width:450px; width:100%;">
 
                     <h3 class="text-center mb-4">
                         <i class="fa-solid fa-right-to-bracket"></i> Login
                     </h3>
+
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -48,19 +46,12 @@
 
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text"
-                                   name="username"
-                                   class="form-control"
-                                   required
-                                   autofocus>
+                            <input type="text" name="username" class="form-control" required autofocus>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label">Password</label>
-                            <input type="password"
-                                   name="password"
-                                   class="form-control"
-                                   required>
+                            <input type="password" name="password" class="form-control" required>
                         </div>
 
                         <button type="submit" class="btn btn-trek w-100">
@@ -75,17 +66,14 @@
                         <a href="{{ url_for('auth.register') }}">Sign Up here</a>
                     </p>
 
-                    <a href="{{ url_for('auth.index') }}" class="btn btn-outline-secondary w-100">
+                    <a href="{{ url_for('auth.index') }}" class="btn btn-outline-primary w-100">
                         <i class="fa-solid fa-house"></i>
                         Back to Home
                     </a>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </div>
 {% endblock %}

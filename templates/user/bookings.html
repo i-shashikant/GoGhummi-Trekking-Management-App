@@ -9,34 +9,43 @@
 <div class="table-container">
 <div class="table-responsive">
 <table class="table table-hover align-middle mb-0">
+
     <thead>
-        <tr><th>Booking ID</th><th>Trek</th><th>Location</th><th>Status</th><th>Booked On</th><th>Price</th><th>Action</th></tr>
-    </thead>
-    <tbody>
-    {% for b in bookings %}
         <tr>
-            <td>{{ b.id }}</td>
-            <td>{{ b.trek.trek_name }}</td>
-            <td>{{ b.trek.location }}</td>
+            <th>Booking ID</th>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Booked On</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.trek.trek_name }}</td>
+            <td>{{ booking.trek.location }}</td>
+            <td> <span class="badge {% if booking.status == 'Booked' %}bg-success{% elif booking.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}"> {{ booking.status }} </span> </td>
+            <td>{{ booking.booking_date.strftime('%d %b %Y') }}</td>
+            <td>₹ {{ booking.trek.price }}</td>
             <td>
-                <span class="badge {% if b.status == 'Booked' %}bg-success{% elif b.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">
-                    {{ b.status }}
-                </span>
-            </td>
-            <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
-            <td>₹ {{ b.trek.price }}</td>
-            <td>
-                {% if b.status == 'Booked' %}
+                {% if booking.status == 'Booked' %}
                 <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
                     <button class="btn btn-sm btn-outline-danger">Cancel</button>
                 </form>
                 {% endif %}
             </td>
         </tr>
+
     {% else %}
         <tr><td colspan="6" class="text-center text-muted">No bookings yet. <a href="{{ url_for('user.browse_treks') }}">Browse treks</a></td></tr>
     {% endfor %}
+    
     </tbody>
+
 </table>
 </div>
 </div>

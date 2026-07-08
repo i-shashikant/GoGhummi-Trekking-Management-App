@@ -1,9 +1,7 @@
 {% extends "layouts/dashboard.html" %}
 {% import "staff/_nav.html" as nav %}
-
 {% block title %}Participants | GoGhummi{% endblock %}
 {% block sidebar %}{{ nav.staff_sidebar() }}{% endblock %}
-
 {% block content %}
 
 
@@ -12,6 +10,7 @@
     <h2 class="text-center mb-4">
         Trek Participants
     </h2>
+
     <div class="table-container">
     <table class="table table-bordered mb-0">
 
@@ -27,7 +26,6 @@
         </thead>
 
         <tbody>
-
         {% for booking in bookings %}
         <tr>
             <td>{{ booking.user.id }}</td>
@@ -39,9 +37,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-center">
-                No participants yet.
-            </td>
+            <td colspan="5" class="text-center"> No participants yet. </td>
         </tr>
         </tbody>
     </table>
