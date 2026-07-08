@@ -127,7 +127,6 @@ def edit_trek(trek_id):
             trek.assigned_staff_id = None
 
         db.session.commit()
-
         flash("Trek updated successfully.", "success")
         return redirect(url_for("admin.treks"))
 
@@ -174,7 +173,6 @@ def add_trek():
 
         db.session.add(new_trek)
         db.session.commit()
-
         flash("Trek created successfully.", "success")
         return redirect(url_for("admin.treks"))
 
