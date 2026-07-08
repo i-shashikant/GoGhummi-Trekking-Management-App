@@ -133,3 +133,28 @@ body::before{
     color:#198754;
     font-weight:700;
 }
+
+.badge-status-Open{
+    background:#198754;
+}
+
+.badge-status-Closed{
+    background:#6c757d;
+}
+
+.badge-status-Completed{
+    background:#ffc107;
+    color:#000;
+}
+
+.badge-difficulty-Easy{
+    background:#198754;
+}
+
+.badge-difficulty-Moderate{
+    background:#ffc107;
+}
+
+.badge-difficulty-Hard{
+    background:#dc3545;
+}

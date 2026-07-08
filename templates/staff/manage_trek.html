@@ -25,7 +25,7 @@
         <div class="card card-trek p-3">
             <h6>Current Status</h6>
 
-            <span class="badge,{% if trek.status=='Open' %} bg-success {% elif trek.status=='Closed' %} bg-secondary {% else %} bg-warning text-dark {% endif %}">
+            <span class="badge,{% if trek.status=='Open' %} badge bg-success {% elif trek.status=='Closed' %} badge bg-secondary {% else %} badge bg-warning {% endif %}">
                 {{ trek.status }}
             </span>
         </div>

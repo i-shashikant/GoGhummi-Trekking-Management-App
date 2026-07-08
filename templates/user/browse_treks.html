@@ -40,8 +40,11 @@
     <div class="col-md-4" >
         <div class="card card-trek p-3 h-100 {% if t.status != 'Open' %} opacity-75 {% endif %}">
             <h5>{{ t.trek_name }}</h5>
-            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ t.location }}</p>
-            <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
+            <p class="mb-1"><i class="fa-solid fa-location-dot text-danger"></i> {{ t.location }}</p>
+            <div class="text-center my-2">
+                <span class="badge badge-status-{{ t.status }}"> Status - {{ t.status }} </span> <hr>
+                <span class="badge badge-difficulty-{{ t.difficulty }} mb-2"> Difficulty - {{ t.difficulty }} </span>
+            </div>
             <p class="mb-1"><i class="fa-solid fa-calendar"></i> {{ t.start_date.strftime('%d %b') }} - {{ t.end_date.strftime('%d %b %Y') }}</p>
             <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
             <p class="text-success fw-bold">₹ {{ t.price }}</p>

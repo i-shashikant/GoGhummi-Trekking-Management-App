@@ -17,8 +17,10 @@
     <div class="col-md-4">
         <div class="card card-trek p-3 h-100">
             <h5>{{ t.trek_name }}</h5>
-            <p class="mb-1"><i class="fa-solid fa-location-dot"></i> {{ t.location }}</p>
-            <span class="badge badge-difficulty-{{ t.difficulty }} mb-2">{{ t.difficulty }}</span>
+            <p class="mb-1"><i class="fa-solid fa-location-dot text-danger"></i> {{ t.location }}</p>
+            <div class="text-center my-2">
+                <span class="badge badge-difficulty-{{ t.difficulty }} mb-2"> Difficulty - {{ t.difficulty }}</span>
+            </div>
             <p class="mb-1"><i class="fa-solid fa-chair"></i> {{ t.available_slots }} slots left</p>
             <h5 class="text-success fw-bold"> ₹ {{ t.price }} </h5>
             <a href="{{ url_for('user.trek_detail', trek_id=t.id) }}" class="btn btn-primary mt-2">View Details</a>
@@ -49,7 +51,8 @@
         <tr>
             <td>{{ booking.id }}</td>
             <td>{{ booking.trek.trek_name }}</td>
-            <td><span class="badge {% if booking.status == 'Booked' %}bg-success{% elif booking.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">{{ booking.status }}</span></td>
+            <td>
+                <span class="badge {% if booking.status == 'Booked' %}bg-success{% elif booking.status == 'Cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">{{ booking.status }}</span></td>
             <td>{{ booking.booking_date.strftime('%d %b %Y') }}</td>
         </tr>
     {% endfor %}
