@@ -1,12 +1,7 @@
 {% extends "layouts/dashboard.html" %}
 {% import "staff/_nav.html" as nav %}
-
 {% block title %}Staff Dashboard | GoGhummi{% endblock %}
-
-{% block sidebar %}
-{{ nav.staff_sidebar() }}
-{% endblock %}
-
+{% block sidebar %} {{ nav.staff_sidebar() }} {% endblock %}
 {% block content %}
 
 <h2 class="mb-4">
@@ -14,65 +9,37 @@
     Welcome, {{ user.username }}
 </h2>
 
-<!-- Stats -->
-
 <div class="row g-4 mb-4">
-
     <div class="col-md-4">
-
         <div class="card card-trek p-4 text-center">
-
             <i class="fa-solid fa-route fa-2x mb-2 text-primary"></i>
-
             <h5>Assigned Treks</h5>
-
             <h2 class="fw-bold">{{ assigned_count }}</h2>
-
         </div>
-
     </div>
 
     <div class="col-md-4">
-
         <div class="card card-trek p-4 text-center">
-
             <i class="fa-solid fa-mountain-sun fa-2x mb-2 text-success"></i>
-
             <h5>Open Treks</h5>
-
             <h2 class="fw-bold">{{ open_count }}</h2>
-
         </div>
-
     </div>
 
     <div class="col-md-4">
-
         <div class="card card-trek p-4 text-center">
-
             <i class="fa-solid fa-users fa-2x mb-2 text-warning"></i>
-
             <h5>Total Bookings</h5>
-
             <h2 class="fw-bold">{{ booking_count }}</h2>
-
         </div>
-
     </div>
-
 </div>
 
-<!-- Today's Summary -->
 
 <div class="list-group">
-
 {% for trek in assigned_treks[:3] %}
-
 <div class="list-group-item">
-    
-
     <div class="d-flex justify-content-between align-items-start">
-
         <div>
 
             <h6 class="mb-1">
@@ -107,25 +74,12 @@
 
         </div>
 
-        <span class="badge
-        {% if trek.status=='Open' %}
-            bg-success
-        {% elif trek.status=='Closed' %}
-            bg-secondary
-        {% else %}
-            bg-warning text-dark
-        {% endif %}">
-
+        <span class="badge {% if trek.status=='Open' %} bg-success {% elif trek.status=='Closed' %}  bg-secondary {% else %} bg-warning text-dark {% endif %}">
             {{ trek.status }}
-
         </span>
-
     </div>
-
 </div>
-
 {% endfor %}
 
-</div>
 
 {% endblock %}

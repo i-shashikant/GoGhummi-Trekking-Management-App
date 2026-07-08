@@ -84,6 +84,12 @@ body::before{
 
 }
 
+.table tfoot{
+
+    background:rgba(255,255,255,.12);
+
+}
+
 .table thead th{
 
     color:black;
@@ -92,6 +98,13 @@ body::before{
 
 }
 
+.table thead th{
+
+    color:black;
+
+    border-bottom:1px solid rgba(255,255,255,.2);
+
+}
 .table tbody td{
 
     background:transparent;

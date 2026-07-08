@@ -1,14 +1,7 @@
 {% extends "layouts/dashboard.html" %}
 {% import "staff/_nav.html" as nav %}
-
-{% block title %}
-Assigned Treks | GoGhummi
-{% endblock %}
-
-{% block sidebar %}
-{{ nav.staff_sidebar() }}
-{% endblock %}
-
+{% block title %} Assigned Treks | GoGhummi {% endblock %}
+{% block sidebar %} {{ nav.staff_sidebar() }} {% endblock %}
 {% block content %}
 
 <h2 class="mb-4">
@@ -32,39 +25,25 @@ Assigned Treks | GoGhummi
     <tbody>
 
     {% for trek in treks %}
-
     <tr>
-
         <td>{{ trek.trek_name }}</td>
-
         <td>{{ trek.location }}</td>
-
         <td>{{ trek.status }}</td>
-
         <td>{{ trek.available_slots }}</td>
+        <td><div class="d-flex gap-2">
+                <a class="btn btn-info btn-sm" href="{{ url_for('staff.participants', trek_id=trek.id) }}">
+                    <i class="fa-solid fa-users"></i>
+                    Participants
+                </a>
 
-        <td>
-        <div class="d-flex gap-2">
-
-            <a class="btn btn-info btn-sm"
-            href="{{ url_for('staff.participants', trek_id=trek.id) }}">
-                <i class="fa-solid fa-users"></i>
-                Participants
-            </a>
-
-            <a class="btn btn-warning btn-sm"
-            href="{{ url_for('staff.manage_trek', trek_id=trek.id) }}">
-                <i class="fa-solid fa-gear"></i>
-                Manage
-            </a>
-
-        </div>
+                <a class="btn btn-warning btn-sm" href="{{ url_for('staff.manage_trek', trek_id=trek.id) }}">
+                    <i class="fa-solid fa-gear"></i>
+                    Manage
+                </a>
+            </div>
         </td>
-
     </tr>
-
     {% endfor %}
-
     </tbody>
 
 </table>

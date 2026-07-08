@@ -8,7 +8,6 @@
 <h2 class="mb-4"><i class="fa-solid fa-people-group"></i> Manage Trek Staff</h2>
 
 <form method="GET" class="mb-3 d-flex">
-
     <input
         type="text"
         name="q"
@@ -20,51 +19,62 @@
         <i class="fa-solid fa-search"></i>
     </button>
 
-    {% if q %}
-    <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger">
-        Clear
-    </a>
-    {% endif %}
+    {% if q %} <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger"> Clear </a> {% endif %}
 
 </form>
+
 <div class="table-container">
 <div class="table-responsive">
 <table class="table table-hover align-middle mb-0">
+
     <thead>
-        <tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
-    </thead>
-    <tbody>
-    {% for s in staff_list %}
         <tr>
-            <td>{{ s.username }}</td>
-            <td>{{ s.username }}</td>
-            <td>{{ s.email or '-' }}</td>
-            <td>{{ s.phone }}</td>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Actions</th></tr>
+    </thead>
+
+    <tbody>
+    {% for staff in staff_list %}
+        <tr>
+            <td>{{ staff.username }}</td>
+            <td>{{ staff.username }}</td>
+            <td>{{ staff.email or '-' }}</td>
+            <td>{{ staff.phone }}</td>
             <td>
-                {% if s.approval_status == 'Pending' %}
+                {% if staff.approval_status == 'Pending' %}
                     <span class="badge bg-warning text-dark">Pending</span>
-                {% elif s.approval_status == 'Approved' %}
+                {% elif staff.approval_status == 'Approved' %}
                     <span class="badge bg-success">Approved</span>
                 {% else %}
                     <span class="badge bg-dark">Blacklisted</span>
                 {% endif %}
             </td>
+
             <td>
-                {% if s.approval_status != 'Approved' %}
-                    <form method="POST" action="{{ url_for('admin.approve_staff', user_id=s.id) }}" class="d-inline">
+
+                {% if staff.approval_status != 'Approved' %}
+                    <form method="POST" action="{{ url_for('admin.approve_staff', user_id=staff.id) }}" class="d-inline">
                         <button class="btn btn-sm btn-success"><i class="fa-solid fa-check"></i> Approve</button>
                     </form>
                 {% endif %}
-                {% if s.approval_status != 'Blacklisted' %}
-                    <form method="POST" action="{{ url_for('admin.blacklist_staff', user_id=s.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this staff member?');">
+
+                {% if staff.approval_status != 'Blacklisted' %}
+                    <form method="POST" action="{{ url_for('admin.blacklist_staff', user_id=staff.id) }}" class="d-inline" onsubmit="return confirm('Blacklist this staff member?');">
                         <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-ban"></i> Blacklist</button>
                     </form>
                 {% endif %}
+
             </td>
         </tr>
+
     {% else %}
         <tr><td colspan="5" class="text-center text-muted">No staff found.</td></tr>
     {% endfor %}
+
     </tbody>
 </table>
 </div>

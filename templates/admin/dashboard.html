@@ -6,7 +6,6 @@
 
 
 <div class="mb-4">
-
     <h1 class="fw-bold">
         👋 Welcome back, {{ session["username"] }}
     </h1>
@@ -14,7 +13,6 @@
     <p class="text-secondary">
         Here's a quick overview of your trekking management system.
     </p>
-
 </div>
 
 <div class="row g-4 mb-4">
@@ -54,9 +52,10 @@
 </div>
 
 {% if pending_staff > 0 %}
-<div class="alert alert-warning">
-    <i class="fa-solid fa-triangle-exclamation"></i>
-    You have <strong>{{ pending_staff }}</strong> staff registration(s) pending approval.
+
+<div class="dashboard-pending-staff mb-4">
+    <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+    You have <strong>{{ pending_staff }}</strong> staff registration(s) approval pending.
     <a href="{{ url_for('admin.staff') }}" class="alert-link">Review now</a>
 </div>
 {% endif %}
@@ -65,26 +64,40 @@
     <i class="fa-solid fa-clock-rotate-left"></i>
     Recent Bookings
 </h4>
+
 <div class="table-container">
     {% if recent_bookings %}
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
-            <thead><tr><th>Booking ID</th><th>User</th><th>Trek</th><th>Status</th><th>Date</th></tr></thead>
-            <tbody>
-            {% for b in recent_bookings %}
+
+            <thead>
                 <tr>
-                    <td>{{ b.id }}</td>
-                    <td>{{ b.user.username }}</td>
-                    <td>{{ b.trek.trek_name }}</td>
-                    <td><span class="badge bg-secondary">{{ b.status }}</span></td>
-                    <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
+                    <th>Booking ID</th>
+                    <th>User</th>
+                    <th>Trek</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for booking in recent_bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.trek.trek_name }}</td>
+                    <td><span class="badge bg-secondary">{{ booking.status }}</span></td>
+                    <td>{{ booking.booking_date.strftime('%d %b %Y') }}</td>
                 </tr>
             {% endfor %}
             </tbody>
+            
         </table>
     </div>
+
     {% else %}
         <p class="text-muted">No bookings yet.</p>
     {% endif %}
+    
 </div>
 {% endblock %}

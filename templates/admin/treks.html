@@ -23,9 +23,7 @@
     </button>
 
     {% if q %}
-    <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger">
-        Clear
-    </a>
+    <a href="{{ url_for(request.endpoint) }}" class="btn btn-outline-danger"> Clear </a>
     {% endif %}
 
 </form>
@@ -34,88 +32,61 @@
 <div class="table-container">
 <div class="table-responsive">
 <table class="table table-hover align-middle mb-0">
+    
     <thead >
         <tr>
-            <th>Name</th><th>Location</th><th>Difficulty</th><th>Slots</th>
-            <th>Staff</th><th>Status</th><th>Price</th><th>Actions</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Slots</th>
+            <th>Staff</th>
+            <th>Status</th>
+            <th>Price</th>
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-    {% for t in treks %}
-        <tr>
-            <td>{{ t.trek_name }}</td>
-            <td>{{ t.location }}</td>
-            <td><span class="badge
-            {% if t.difficulty == 'Easy' %}
-            bg-success
-            {% elif t.difficulty == 'Moderate' %}
-            bg-warning text-dark
-            {% else %}
-            bg-danger
-            {% endif %}">
-                {{ t.difficulty }}</span></td>
-            <td>{{ t.available_slots }} / {{ t.max_slots }}</td>
-            <td>{% if t.assigned_staff %}
 
-                    <strong>{{ t.assigned_staff.username }}</strong>
+    <tbody>
+    {% for trek in treks %}
+        <tr>
+            <td>{{ trek.trek_name }}</td>
+            <td>{{ trek.location }}</td>
+            <td><span class="badge {% if trek.difficulty == 'Easy' %} bg-success {% elif trek.difficulty == 'Moderate' %} bg-warning text-dark {% else %} bg-danger {% endif %}"> {{ trek.difficulty }} </span></td>
+            <td>{{ trek.available_slots }} / {{ trek.max_slots }}</td>
+            <td>{% if trek.assigned_staff %} 
+                <strong> {{ trek.assigned_staff.username }}</strong>
 
                 {% else %}
-
-                <form method="POST"
-                    action="{{ url_for('admin.assign_staff', trek_id=t.id) }}"
-                    class="d-flex">
-
-                    <select name="assigned_staff_id"
-                            class="form-select form-select-sm me-2"
-                            required>
-
+                <form method="POST" action="{{ url_for('admin.assign_staff', trek_id=trek.id) }}" class="d-flex">
+                    <select name="assigned_staff_id" class="form-select form-select-sm me-2" required>
                         <option value="">Assign...</option>
 
-                        {% for s in staff_list %}
-                            <option value="{{ s.id }}">
-                                {{ s.username }}
-                            </option>
+                        {% for staff in staff_list %}
+                            <option value="{{ staff.id }}"> {{ staff.username }} </option>
                         {% endfor %}
-
                     </select>
-
-                    <button class="btn btn-sm btn-success">
-                        Assign
-                    </button>
-
+                    <button class="btn btn-sm btn-success"> Assign </button>
                 </form>
-
                 {% endif %}</td>
-            <td><span class="badge {% if t.status == 'Open' %}bg-success{% elif t.status == 'Closed' %}bg-secondary{% else %}bg-warning text-dark{% endif %}">{{ t.status }}</span></td>
-            <td>₹ {{ t.price }}</td>
 
-
+            <td><span class="badge {% if trek.status == 'Open' %}bg-success{% elif trek.status == 'Closed' %}bg-secondary{% else %}bg-warning text-dark{% endif %}">{{ trek.status }}</span></td>
+            <td>₹ {{ trek.price }}</td>
             <td>
-
-            <a href="{{ url_for('admin.edit_trek', trek_id=t.id) }}"
-            class="btn btn-warning btn-sm">
-
+            <a href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}" class="btn btn-warning btn-sm">
                 <i class="fa-solid fa-pen"></i>
-
             </a>
 
-            <form method="POST"
-                action="{{ url_for('admin.delete_trek', trek_id=t.id) }}"
-                class="d-inline"
-                onsubmit="return confirm('Delete this trek?');">
-
+            <form method="POST" action="{{ url_for('admin.delete_trek', trek_id=trek.id) }}" class="d-inline" onsubmit="return confirm('Delete this trek?');">
                 <button class="btn btn-danger btn-sm">
-
                     <i class="fa-solid fa-trash"></i>
                 </button>
-
-            </form>
-
-            </td>
+            </form> </td>
         </tr>
+
     {% else %}
         <tr><td colspan="8" class="text-center text-muted">No treks found.</td></tr>
     {% endfor %}
+    
     </tbody>
 </table>
 </div>
