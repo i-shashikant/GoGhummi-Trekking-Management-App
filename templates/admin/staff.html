@@ -29,18 +29,19 @@
 
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Id</th>
             <th>Username</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Status</th>
-            <th>Actions</th></tr>
+            <th>Actions</th>
+        </tr>
     </thead>
 
     <tbody>
     {% for staff in staff_list %}
         <tr>
-            <td>{{ staff.username }}</td>
+            <td>{{ staff.id }}</td>
             <td>{{ staff.username }}</td>
             <td>{{ staff.email or '-' }}</td>
             <td>{{ staff.phone }}</td>

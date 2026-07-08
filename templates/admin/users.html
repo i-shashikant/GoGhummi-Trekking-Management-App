@@ -30,6 +30,7 @@
 
             <thead>
                 <tr>
+                    <th>User Id</th>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -41,6 +42,7 @@
             <tbody>
             {% for user in users %}
                 <tr>
+                    <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email or '-' }}</td>
                     <td>{{ user.phone }}</td>
