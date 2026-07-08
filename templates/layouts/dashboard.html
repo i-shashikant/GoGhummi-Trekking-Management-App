@@ -16,7 +16,15 @@
           href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body class="bg-dark text-light">
+<body class="
+{% if session.role == 'admin' %}
+admin-bg
+{% elif session.role == 'staff' %}
+staff-bg
+{% else %}
+user-bg
+{% endif %}
+text-light">
 {% set current = request.endpoint %}
 
 <div class="d-flex">

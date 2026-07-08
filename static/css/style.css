@@ -115,4 +115,33 @@ body{
 
 .alert.fade-out {
     opacity: 0;
-}       
+}   
+
+.flash-message{
+    max-width:650px;
+    margin:20px auto;
+    border-radius:12px;
+}
+
+.admin-bg{
+    background: url("../images/admin-bg.jpg") center/cover fixed;
+}
+
+.staff-bg{
+    background: url("../images/staff-bg.jpg") center/cover fixed;
+}
+
+.user-bg{
+    background: url("../images/user-bg.jpg") center/cover fixed;
+}
+body{
+    position:relative;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:-1;
+}
