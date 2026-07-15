@@ -124,23 +124,58 @@ The application uses **SQLite** with **SQLAlchemy ORM**.
 - One User → Many Bookings
 - One Trek → Many Bookings
 - One Staff → Many Assigned Treks
+![alt text](Mad1.png)
 
 ---
 
 ## 📸 Screenshots
 
-> Add screenshots here before submission.
+![alt text](image.png)
+![alt text](image-1.png)
 
-- Landing Page
-- Login Page
-- Admin Dashboard
-- Staff Dashboard
-- User Dashboard
-- Browse Treks
-- Trek Details
-- Bookings Page
+
 
 ---
+                           GoGhummi
+                Trekking Management System
+────────────────────────────────────────────────────────────
+
+                    Client (Web Browser)
+                           │
+                HTML • CSS • Bootstrap • JS
+                           │
+                           ▼
+                      Flask Application
+                         (app.py)
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+   Authentication      Admin Module      Staff Module
+     (routes/auth.py) (routes/admin.py) (routes/staff.py)
+        │                                   │
+        └──────────────┬────────────────────┘
+                       ▼
+                  User Module
+               (routes/user.py)
+                       │
+                       ▼
+                Authentication &
+                Role Decorators
+                  (utils/auth.py)
+                       │
+                       ▼
+                 SQLAlchemy ORM
+                       │
+              Models (models/)
+        ┌──────────┬──────────┬──────────┐
+        │          │          │
+      User       Trek      Booking
+        │          │          │
+        └──────────┴──────────┘
+                       │
+                       ▼
+                SQLite Database
 
 ## ⚙️ Installation
 
